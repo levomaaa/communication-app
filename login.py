@@ -28,15 +28,11 @@ def user_id():
     return session.get("user_id", 0)
 
 def register(username, password):
-    sql = "SELECT name FROM users WHERE name=username"
-    if sql:
+    hash_value = generate_password_hash(password)
+    try:
+        sql = "INSERT INTO users (name, password) VALUES (:username, :password)"
+        db.session.execute(text(sql), {"username":username, "password":hash_value})
+        db.session.commit()
+    except:
         return False
-    else:
-        hash_value = generate_password_hash(password)
-        try:
-            sql = "INSERT INTO users (name, password) VALUES (:username, :password)"
-            db.session.execute(text(sql), {"username":username, "password":hash_value})
-            db.session.commit()
-        except:
-            return False
-        return login(username, password)
+    return login(username, password)

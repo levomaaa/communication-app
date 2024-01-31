@@ -1,12 +1,13 @@
 from app import app
 from flask import render_template, request, redirect
 import login
+import forums
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
-
+    return render_template("index.html", messages=forums.get_forums())
+    
 @app.route("/login", methods=["GET", "POST"])
 def log_in():
     if request.method == "GET":
@@ -42,3 +43,14 @@ def register():
         else:
             return render_template("error.html", message="Username is already in use")
             
+@app.route("/new_forum")
+def new():
+    return render_template("new_forum.html")
+
+@app.route("/send", methods=["POST"])
+def send():
+    content = request.form["forumname"]
+    if forums.send(content):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Failure creating forum")
