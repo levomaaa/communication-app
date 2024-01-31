@@ -20,10 +20,6 @@ def login(username,password):
         else:
             return False
 
-    # TODO: check username and password
-    #session["username"] = username
-    #return redirect("/")
-
 def logout():
     del session["user_id"]
     return redirect("/")
@@ -32,11 +28,15 @@ def user_id():
     return session.get("user_id", 0)
 
 def register(username, password):
-    hash_value = generate_password_hash(password)
-    try:
-        sql = "INSERT INTO users (name, password) VALUES (:username, :password)"
-        db.session.execute(text(sql), {"username":username, "password":hash_value})
-        db.session.commit()
-    except:
+    sql = "SELECT name FROM users WHERE name=username"
+    if sql:
         return False
-    return login(username, password)
+    else:
+        hash_value = generate_password_hash(password)
+        try:
+            sql = "INSERT INTO users (name, password) VALUES (:username, :password)"
+            db.session.execute(text(sql), {"username":username, "password":hash_value})
+            db.session.commit()
+        except:
+            return False
+        return login(username, password)

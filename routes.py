@@ -40,5 +40,5 @@ def register():
         if login.register(username, password1):
             return redirect("/")
         else:
-            return render_template("error.html", message="Registeration failed")
+            return render_template("error.html", message="Username is already in use")
             
