@@ -25,8 +25,8 @@ The application shows discussion forums, each of which has a specific topic. The
 # Startup instructions:
 
 Clone this repository on your own computer and go to its root folder. Create a .env file in the folder and specify its contents as follows:
-* DATABASE_URL=<datadase-local-address>
-* SECRET_KEY=<secret-key>
+* DATABASE_URL="datadase-local-address"
+* SECRET_KEY="secret-key"
 
 Next, activate the virtual environment and install the application dependencies with commands:
 * python3 -m venv venv
