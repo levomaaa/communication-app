@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for message in messages %}
+
+<input type="hidden" name="forum_id" value="{{ message[0] }}">
+
+<p>Are you sure you want to delete the {{ message[1] }} forum?</p>
+<form action="/deleteforum/{{ message[0] }}" method="post">
+{% endfor %}
+<p>
+<input type="submit" value="Yes">
+</form>
+<p>
+<a href="/">Return to main page</a>
+
+{% endblock %}

@@ -34,3 +34,9 @@ def edit(forum_id, edited_content):
     db.session.execute(text(sql), {"forum_id":forum_id, "edited_content":edited_content})
     db.session.commit()
     return True
+
+def delete(forum_id):
+    sql = "DELETE FROM forums WHERE id=:forum_id"
+    db.session.execute(text(sql), {"forum_id":forum_id})
+    db.session.commit()
+    return True

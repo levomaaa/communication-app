@@ -67,3 +67,15 @@ def editforum(forum_id):
     else:
         return render_template("error.html", message="Failure editing forum")
     
+@app.route("/delete_forum/<int:forum_id>")
+def delete_forum_render(forum_id):
+    return render_template("delete_forum.html", forum_id=forum_id, messages=forums.get_forum(forum_id))
+
+
+@app.route("/deleteforum/<int:forum_id>", methods=["GET", "POST"])
+def deleteforum(forum_id):
+    if forums.delete(forum_id):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Failure deleting forum")
+    
