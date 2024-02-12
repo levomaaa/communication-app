@@ -54,3 +54,16 @@ def send():
         return redirect("/")
     else:
         return render_template("error.html", message="Failure creating forum")
+    
+@app.route("/edit_forum/<int:forum_id>")
+def edit_forum_render(forum_id):
+    return render_template("edit_forum.html", forum_id=forum_id, messages=forums.get_forum(forum_id))
+
+@app.route("/editforum/<int:forum_id>", methods=["GET", "POST"])
+def editforum(forum_id):
+    edited_content = request.form["forumname_edit"]
+    if forums.edit(forum_id,edited_content):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Failure editing forum")
+    

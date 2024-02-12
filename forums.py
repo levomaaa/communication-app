@@ -12,6 +12,12 @@ def get_forums():
     result = db.session.execute(text(sql))
     return result.fetchall()
 
+def get_forum(forum_id):
+    sql = "SELECT id, content FROM forums " \
+          "WHERE id = :forum_id"
+    result = db.session.execute(text(sql), {"forum_id":forum_id})
+    return result.fetchall()
+
 def send(content):
     user_id = login.user_id()
     if user_id == 0:
@@ -19,5 +25,12 @@ def send(content):
     sql = "INSERT INTO forums (content, user_id) " \
           "VALUES (:content, :user_id)"
     db.session.execute(text(sql), {"content":content, "user_id":user_id})
+    db.session.commit()
+    return True
+
+def edit(forum_id, edited_content):
+    sql = "UPDATE forums SET content = :edited_content " \
+          "WHERE id = :forum_id"
+    db.session.execute(text(sql), {"forum_id":forum_id, "edited_content":edited_content})
     db.session.commit()
     return True
