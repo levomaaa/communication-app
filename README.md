@@ -1,8 +1,8 @@
-## Communication application
+# Communication application
 
 The application shows discussion forums, each of which has a specific topic. The forums contain different discussion threads where users can send messages. Every user is either a regular user or an administrator.
 
-# Features of the application:
+## Features of the application:
 
 * User can log in and out and create a new account.
 * On the front page of the app, the user sees a list of discussion forums, the number of threads and messages in each forum, and the date of the last message sent.
@@ -13,7 +13,7 @@ The application shows discussion forums, each of which has a specific topic. The
 * The administrator can add and remove discussion areas.
 * The administrator can create a secret area and determine which users have access to the area.
 
-# Present situation:
+## Present situation:
 
 * User can log in and out and create a new account.
 * The username is unique and no one can have the same as you.
@@ -22,7 +22,7 @@ The application shows discussion forums, each of which has a specific topic. The
 * The layout has been modified to be a bit prettier and more practical.
 * For now, the product can only be tested locally, but hopefully also online in the future.
 
-# Startup instructions:
+## Startup instructions:
 
 Clone this repository on your own computer and go to its root folder. Create a .env file in the folder and specify its contents as follows:
 * DATABASE_URL="datadase-local-address"
