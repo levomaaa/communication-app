@@ -2,6 +2,7 @@ from app import app
 from flask import render_template, request, redirect
 import login
 import forums
+import threads
 
 
 @app.route("/")
@@ -78,4 +79,8 @@ def deleteforum(forum_id):
         return redirect("/")
     else:
         return render_template("error.html", message="Failure deleting forum")
+    
+@app.route("/forum/<int:forum_id>")
+def forum(forum_id):
+    return render_template("threads.html", threads=threads.get_threads(forum_id), forum=forums.get_forum(forum_id))
     

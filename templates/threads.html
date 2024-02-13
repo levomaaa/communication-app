@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for f in forum %}
+<h2>{{ f[1] }}</h2>
+{% endfor %}
+<p>
+You are logged in as <b>{{ session.user_name }}</b>.
+<p>
+<a href="/">Return to main page</a>
+
+
+
+<form action="/new_thread">
+    <button class="threadbutton" >Add new thread</button>
+</form>
+
+<hr>
+{% for thread in threads %}
+<a href="/thread/{{ thread[0] }}">To {{ thread[1] }} thread #TODO</a>
+<p>
+<i>Thread:</i> {{ thread[1] }}
+<p>
+<i>Creator:</i> {{ thread[2] }}
+<p>
+<i>Messages: #TODO</i>
+<p>
+<i>Last message: #TODO</i>
+<p>
+<input type="hidden" name="thread_id" value="{{ thread[0] }}">
+{% if session.user_name == thread[2] %}
+<a href="/edit_thread/{{ thread[0] }}">Edit thread #TODO</a>
+<a href="/delete_thread/{{ thread[0] }}">Delete thread #TODO</a>
+
+{% endif %}
+<hr>
+{% endfor %}
+
+
+
+{% endblock %}

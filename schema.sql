@@ -11,3 +11,11 @@ CREATE TABLE forums (
     user_id INTEGER REFERENCES users,
     visible BOOLEAN
 );
+
+CREATE TABLE threads (
+    id SERIAL PRIMARY KEY,
+    content TEXT,
+    user_id INTEGER REFERENCES users,
+    forum_id INTEGER REFERENCES forums (id),
+    visible BOOLEAN
+);
