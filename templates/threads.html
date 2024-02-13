@@ -3,7 +3,6 @@
 
 {% for f in forum %}
 <h2>{{ f[1] }}</h2>
-{% endfor %}
 <p>
 You are logged in as <b>{{ session.user_name }}</b>.
 <p>
@@ -11,9 +10,11 @@ You are logged in as <b>{{ session.user_name }}</b>.
 
 
 
-<form action="/new_thread">
+<form action="/new_thread/{{ f[0] }}">
     <button class="threadbutton" >Add new thread</button>
 </form>
+{% endfor %}
+
 
 <hr>
 {% for thread in threads %}

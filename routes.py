@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for
 import login
 import forums
 import threads
@@ -84,3 +84,14 @@ def deleteforum(forum_id):
 def forum(forum_id):
     return render_template("threads.html", threads=threads.get_threads(forum_id), forum=forums.get_forum(forum_id))
     
+@app.route("/send_thread/<int:forum_id>", methods=["GET", "POST"])
+def send_thread(forum_id):
+    content = request.form["threadname"]
+    if threads.send(content,forum_id):
+        return redirect(url_for("forum", forum_id=forum_id))
+    else:
+        return render_template("error.html", message="Failure creating forum")
+
+@app.route("/new_thread/<int:forum_id>")
+def new_thread(forum_id):
+    return render_template("new_thread.html", forum=forums.get_forum(forum_id))

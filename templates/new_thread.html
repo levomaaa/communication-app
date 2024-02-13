@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Create new thread</h2>
+{% for f in forum %}
+<form action="/send_thread/{{ f[0] }}" method="post">
+Thread name: <br><input type="text" name="threadname">
+<p>
+<input type="submit" value="Post">
+</form>
+{% endfor %}
+
+<p>
+<a href="/">Return to main page</a>
+{% endblock %}

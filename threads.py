@@ -14,3 +14,13 @@ def get_threads(forum_id_in):
           "AND T.forum_id = :forum_id_in AND U.id = T.user_id"
     result = db.session.execute(text(sql), {"forum_id_in":forum_id_in})
     return result.fetchall()
+
+def send(content, forum_id):
+    user_id = login.user_id()
+    if user_id == 0:
+        return False
+    sql = "INSERT INTO threads (content, user_id, forum_id, visible) " \
+          "VALUES (:content, :user_id, :forum_id, TRUE)"
+    db.session.execute(text(sql), {"content":content, "user_id":user_id, "forum_id":forum_id})
+    db.session.commit()
+    return True
