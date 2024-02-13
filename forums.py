@@ -8,7 +8,7 @@ import login
 
 def get_forums():
     sql = "SELECT F.id, F.content, U.name FROM forums F, users U " \
-          "WHERE F.user_id=U.id"
+          "WHERE F.user_id=U.id AND F.visible=TRUE"
     result = db.session.execute(text(sql))
     return result.fetchall()
 
@@ -22,8 +22,8 @@ def send(content):
     user_id = login.user_id()
     if user_id == 0:
         return False
-    sql = "INSERT INTO forums (content, user_id) " \
-          "VALUES (:content, :user_id)"
+    sql = "INSERT INTO forums (content, user_id, visible) " \
+          "VALUES (:content, :user_id, TRUE)"
     db.session.execute(text(sql), {"content":content, "user_id":user_id})
     db.session.commit()
     return True
@@ -36,7 +36,7 @@ def edit(forum_id, edited_content):
     return True
 
 def delete(forum_id):
-    sql = "DELETE FROM forums WHERE id=:forum_id"
+    sql = "UPDATE forums SET visible=FALSE WHERE id=:forum_id"
     db.session.execute(text(sql), {"forum_id":forum_id})
     db.session.commit()
     return True

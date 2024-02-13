@@ -8,5 +8,6 @@ CREATE TABLE users (
 CREATE TABLE forums (
     id SERIAL PRIMARY KEY,
     content TEXT,
-    user_id INTEGER REFERENCES users
+    user_id INTEGER REFERENCES users,
+    visible BOOLEAN
 );
