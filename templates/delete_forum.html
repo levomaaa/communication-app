@@ -5,7 +5,7 @@
 
 <input type="hidden" name="forum_id" value="{{ message[0] }}">
 
-<p>Are you sure you want to delete the {{ message[1] }} forum?</p>
+<p>Are you sure you want to delete the <b>{{ message[1] }}</b> forum?</p>
 <form action="/deleteforum/{{ message[0] }}" method="post">
 {% endfor %}
 <p>
