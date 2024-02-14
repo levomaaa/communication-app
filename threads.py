@@ -5,6 +5,7 @@ from db import db
 import os
 from sqlalchemy.sql import text
 import login
+import forums
 
 def get_threads(forum_id_in):
     sql = "SELECT T.id, T.content, U.name " \
@@ -25,6 +26,21 @@ def get_forum_id(thread_id):
           "WHERE id = :thread_id"
     result = db.session.execute(text(sql), {"thread_id":thread_id})
     return result.fetchone()
+
+def get_thread_count():
+    sql = "SELECT id, forum_id FROM threads " \
+          "WHERE visible = TRUE"
+    result = db.session.execute(text(sql))
+    return result.fetchall()
+
+def get_thread_count_of_forum():
+    list = get_thread_count()
+    forum_count = len(forums.get_all_forums())
+    count = [0] * (forum_count + 5)
+    for i in list:
+        t = i[1]
+        count[t] += 1
+    return count
 
 def send(content, forum_id):
     user_id = login.user_id()

@@ -6,7 +6,6 @@
 {% if session.user_id %}
 You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</a>
 
-
 <form action="/new_forum">
     <button class="forumbutton" >Add new forum</button>
 </form>
@@ -19,9 +18,10 @@ You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</
 <p>
 <i>Creator:</i> {{ message[2] }}
 <p>
-<i>Threads: #TODO</i>
-<p>
 <input type="hidden" name="forum_id" value="{{ message[0] }}">
+<i>Threads:</i> {{ count[message[0]] }}
+<p>
+
 {% if session.user_name == message[2] %}
 <a href="/edit_forum/{{ message[0] }}">Edit forum</a>
 <a href="/delete_forum/{{ message[0] }}">Delete forum</a>

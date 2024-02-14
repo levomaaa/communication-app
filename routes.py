@@ -7,7 +7,8 @@ import threads
 
 @app.route("/")
 def index():
-    return render_template("index.html", messages=forums.get_forums())
+    count = threads.get_thread_count_of_forum()
+    return render_template("index.html", messages=forums.get_forums(), count=count)
     
 @app.route("/login", methods=["GET", "POST"])
 def log_in():
@@ -23,7 +24,6 @@ def log_in():
         else:
             return render_template("error.html", message="Wrong username or password.")
         
-
 @app.route("/logout")
 def logout():
     login.logout()
@@ -72,7 +72,6 @@ def editforum(forum_id):
 def delete_forum_render(forum_id):
     return render_template("delete_forum.html", forum_id=forum_id, messages=forums.get_forum(forum_id))
 
-
 @app.route("/deleteforum/<int:forum_id>", methods=["GET", "POST"])
 def deleteforum(forum_id):
     if forums.delete(forum_id):
@@ -113,7 +112,6 @@ def editthread(thread_id):
 @app.route("/delete_thread/<int:thread_id>")
 def delete_thread_render(thread_id):
     return render_template("delete_thread.html", thread_id=thread_id, threads=threads.get_thread(thread_id))
-
 
 @app.route("/deletethread/<int:thread_id>", methods=["GET", "POST"])
 def deletethread(thread_id):

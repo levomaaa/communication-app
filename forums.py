@@ -18,6 +18,11 @@ def get_forum(forum_id):
     result = db.session.execute(text(sql), {"forum_id":forum_id})
     return result.fetchall()
 
+def get_all_forums():
+    sql = "SELECT id FROM forums"
+    result = db.session.execute(text(sql))
+    return result.fetchall()   
+
 def send(content):
     user_id = login.user_id()
     if user_id == 0:
