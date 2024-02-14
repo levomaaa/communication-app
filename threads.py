@@ -15,6 +15,19 @@ def get_threads(forum_id_in):
     result = db.session.execute(text(sql), {"forum_id_in":forum_id_in})
     return result.fetchall()
 
+def get_thread(thread_id):
+    sql = "SELECT id, content FROM threads " \
+          "WHERE id = :thread_id"
+    result = db.session.execute(text(sql), {"thread_id":thread_id})
+    return result.fetchall()
+
+def get_forum_id(thread_id):
+    sql = "SELECT forum_id FROM threads " \
+          "WHERE id = :thread_id"
+    result = db.session.execute(text(sql), {"thread_id":thread_id})
+    return result.fetchone()
+
+
 def send(content, forum_id):
     user_id = login.user_id()
     if user_id == 0:
@@ -22,5 +35,12 @@ def send(content, forum_id):
     sql = "INSERT INTO threads (content, user_id, forum_id, visible) " \
           "VALUES (:content, :user_id, :forum_id, TRUE)"
     db.session.execute(text(sql), {"content":content, "user_id":user_id, "forum_id":forum_id})
+    db.session.commit()
+    return True
+
+def edit(thread_id, edited_content):
+    sql = "UPDATE threads SET content = :edited_content " \
+          "WHERE id = :thread_id"
+    db.session.execute(text(sql), {"thread_id":thread_id, "edited_content":edited_content})
     db.session.commit()
     return True

@@ -30,7 +30,7 @@ You are logged in as <b>{{ session.user_name }}</b>.
 <p>
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
 {% if session.user_name == thread[2] %}
-<a href="/edit_thread/{{ thread[0] }}">Edit thread #TODO</a>
+<a href="/edit_thread/{{ thread[0] }}">Edit thread</a>
 <a href="/delete_thread/{{ thread[0] }}">Delete thread #TODO</a>
 
 {% endif %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for thread in threads %}
+
+<input type="hidden" name="thread_id" value="{{ thread[0] }}">
+
+<h2>Edit thread</h2>
+<form action="/editthread/{{ thread[0] }}" method="post">
+Thread name: <br><input type="text" name="threadname_edit" value="{{ thread[1] }}">
+{% endfor %}
+<p>
+<input type="submit" value="Post">
+</form>
+<p>
+
+
+
+<a href="/">Return to main page</a>
+
+{% endblock %}

@@ -90,8 +90,23 @@ def send_thread(forum_id):
     if threads.send(content,forum_id):
         return redirect(url_for("forum", forum_id=forum_id))
     else:
-        return render_template("error.html", message="Failure creating forum")
+        return render_template("error.html", message="Failure creating thread")
 
 @app.route("/new_thread/<int:forum_id>")
 def new_thread(forum_id):
     return render_template("new_thread.html", forum=forums.get_forum(forum_id))
+
+@app.route("/edit_thread/<int:thread_id>")
+def edit_thread_render(thread_id):
+    return render_template("edit_thread.html", thread_id=thread_id, threads=threads.get_thread(thread_id))
+
+@app.route("/editthread/<int:thread_id>", methods=["GET", "POST"])
+def editthread(thread_id):
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    edited_content = request.form["threadname_edit"]
+    if threads.edit(thread_id,edited_content):
+        return redirect(url_for("forum", forum_id=forum_id))
+    else:
+        return render_template("error.html", message="Failure editing thread")
+ 
