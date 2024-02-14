@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for thread in threads %}
+
+<input type="hidden" name="thread_id" value="{{ thread[0] }}">
+
+<p>Are you sure you want to delete the <b>{{ thread[1] }}</b> thread?</p>
+<form action="/deletethread/{{ thread[0] }}" method="post">
+{% endfor %}
+<p>
+<input type="submit" value="Yes">
+</form>
+<p>
+<a href="/">Return to main page</a>
+
+{% endblock %}

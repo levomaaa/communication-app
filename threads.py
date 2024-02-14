@@ -6,7 +6,6 @@ import os
 from sqlalchemy.sql import text
 import login
 
-
 def get_threads(forum_id_in):
     sql = "SELECT T.id, T.content, U.name " \
           "FROM threads T, users U " \
@@ -27,7 +26,6 @@ def get_forum_id(thread_id):
     result = db.session.execute(text(sql), {"thread_id":thread_id})
     return result.fetchone()
 
-
 def send(content, forum_id):
     user_id = login.user_id()
     if user_id == 0:
@@ -42,5 +40,11 @@ def edit(thread_id, edited_content):
     sql = "UPDATE threads SET content = :edited_content " \
           "WHERE id = :thread_id"
     db.session.execute(text(sql), {"thread_id":thread_id, "edited_content":edited_content})
+    db.session.commit()
+    return True
+
+def delete(thread_id):
+    sql = "UPDATE threads SET visible=FALSE WHERE id=:thread_id"
+    db.session.execute(text(sql), {"thread_id":thread_id})
     db.session.commit()
     return True

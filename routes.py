@@ -110,3 +110,17 @@ def editthread(thread_id):
     else:
         return render_template("error.html", message="Failure editing thread")
  
+@app.route("/delete_thread/<int:thread_id>")
+def delete_thread_render(thread_id):
+    return render_template("delete_thread.html", thread_id=thread_id, threads=threads.get_thread(thread_id))
+
+
+@app.route("/deletethread/<int:thread_id>", methods=["GET", "POST"])
+def deletethread(thread_id):
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    if threads.delete(thread_id):
+        return redirect(url_for("forum", forum_id=forum_id))
+    else:
+        return render_template("error.html", message="Failure deleting thread")
+  
