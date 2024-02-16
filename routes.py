@@ -37,13 +37,22 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
-        if password1 != password2:
-            return render_template("error.html", message="Passwords do not match")
-        if login.register(username, password1):
-            return redirect("/")
+        username_check = " ".join(username.split())
+        password_check = " ".join(password1.split())            
+
+        if username == username_check and password1 == password_check and username.isspace() == False and password1.isspace() == False: #pituus viel
+            if len(username)>0 or len(password1)>0:
+                if password1 != password2:
+                    return render_template("error.html", message="Passwords do not match")
+                if login.register(username, password1):
+                    return redirect("/")
+                else:
+                    return render_template("error.html", message="Username is already in use")
+            else:
+                return render_template("error.html", message="Username or password can't be empty")
         else:
-            return render_template("error.html", message="Username is already in use")
-            
+            return render_template("error.html", message="Username or password can't contain spaces")
+
 @app.route("/new_forum")
 def new():
     return render_template("new_forum.html")
