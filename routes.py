@@ -51,11 +51,15 @@ def new():
 @app.route("/send", methods=["POST"])
 def send():
     content = request.form["forumname"]
-    if forums.send(content):
-        return redirect("/")
+    " ".join(content.split())
+    if len(content)>0 and content.isspace() == False:
+        if forums.send(content):
+            return redirect("/")
+        else:
+            return render_template("error.html", message="Failure creating forum")
     else:
-        return render_template("error.html", message="Failure creating forum")
-    
+        return render_template("error.html", message="Forum name is too short")
+
 @app.route("/edit_forum/<int:forum_id>")
 def edit_forum_render(forum_id):
     return render_template("edit_forum.html", forum_id=forum_id, messages=forums.get_forum(forum_id))
@@ -63,11 +67,15 @@ def edit_forum_render(forum_id):
 @app.route("/editforum/<int:forum_id>", methods=["GET", "POST"])
 def editforum(forum_id):
     edited_content = request.form["forumname_edit"]
-    if forums.edit(forum_id,edited_content):
-        return redirect("/")
+    " ".join(edited_content.split())
+    if len(edited_content)>0 and edited_content.isspace() == False:
+        if forums.edit(forum_id,edited_content):
+            return redirect("/")
+        else:
+            return render_template("error.html", message="Failure editing forum")
     else:
-        return render_template("error.html", message="Failure editing forum")
-    
+        return render_template("error.html", message="Forum name is too short")
+
 @app.route("/delete_forum/<int:forum_id>")
 def delete_forum_render(forum_id):
     return render_template("delete_forum.html", forum_id=forum_id, messages=forums.get_forum(forum_id))
@@ -86,10 +94,15 @@ def forum(forum_id):
 @app.route("/send_thread/<int:forum_id>", methods=["GET", "POST"])
 def send_thread(forum_id):
     content = request.form["threadname"]
-    if threads.send(content,forum_id):
-        return redirect(url_for("forum", forum_id=forum_id))
+    " ".join(content.split())
+    if len(content)>0 and content.isspace() == False:
+        if threads.send(content,forum_id):
+            return redirect(url_for("forum", forum_id=forum_id))
+        else:
+            return render_template("error.html", message="Failure creating thread")
     else:
-        return render_template("error.html", message="Failure creating thread")
+        return render_template("error.html", message="Thread name is too short")
+
 
 @app.route("/new_thread/<int:forum_id>")
 def new_thread(forum_id):
@@ -104,11 +117,16 @@ def editthread(thread_id):
     forum_id = threads.get_forum_id(thread_id)
     forum_id = forum_id[0]
     edited_content = request.form["threadname_edit"]
-    if threads.edit(thread_id,edited_content):
-        return redirect(url_for("forum", forum_id=forum_id))
+    " ".join(edited_content.split())
+    if len(edited_content)>0 and edited_content.isspace() == False:
+        if threads.edit(thread_id,edited_content):
+            return redirect(url_for("forum", forum_id=forum_id))
+        else:
+            return render_template("error.html", message="Failure editing thread")
     else:
-        return render_template("error.html", message="Failure editing thread")
- 
+        return render_template("error.html", message="Thread name is too short")
+
+
 @app.route("/delete_thread/<int:thread_id>")
 def delete_thread_render(thread_id):
     return render_template("delete_thread.html", thread_id=thread_id, threads=threads.get_thread(thread_id))

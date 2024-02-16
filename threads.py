@@ -36,7 +36,7 @@ def get_thread_count():
 def get_thread_count_of_forum():
     list = get_thread_count()
     forum_count = len(forums.get_all_forums())
-    count = [0] * (forum_count + 5)
+    count = [0] * (forum_count + 50)
     for i in list:
         t = i[1]
         count[t] += 1
