@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Send new message</h2>
+{% for t in thread %}
+<form action="/send_message/{{ t[0] }}" method="post">
+Message: <br><input type="text" name="messagename">
+<p>
+<input type="submit" value="Post">
+</form>
+{% endfor %}
+
+<p>
+<a href="/">Return to main page</a>
+{% endblock %}

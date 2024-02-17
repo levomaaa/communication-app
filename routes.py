@@ -152,5 +152,24 @@ def deletethread(thread_id):
   
 @app.route("/thread/<int:thread_id>")
 def thread(thread_id):
-    return render_template("messages.html", messages=messages.get_messages(thread_id), thread=threads.get_thread(thread_id))
-  
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    return render_template("messages.html", messages=messages.get_messages(thread_id), thread=threads.get_thread(thread_id), forum=forums.get_forum(forum_id))
+
+@app.route("/new_message/<int:thread_id>")
+def new_message(thread_id):
+    return render_template("new_message.html", thread=threads.get_thread(thread_id))
+
+@app.route("/send_message/<int:thread_id>", methods=["GET", "POST"])
+def send_message(thread_id):
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    content = request.form["messagename"]
+    " ".join(content.split())
+    if len(content)>0 and content.isspace() == False:
+        if messages.send(content,thread_id, forum_id):
+            return redirect(url_for("thread", thread_id=thread_id))
+        else:
+            return render_template("error.html", message="Failure creating thread")
+    else:
+        return render_template("error.html", message="Message name is too short")

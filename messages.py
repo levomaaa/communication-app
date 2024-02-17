@@ -16,3 +16,13 @@ def get_messages(thread_id):
           "ORDER BY M.id"
     result = db.session.execute(text(sql), {"thread_id":thread_id})
     return result.fetchall()
+
+def send(content, thread_id, forum_id):
+    user_id = login.user_id()
+    if user_id == 0:
+        return False
+    sql = "INSERT INTO messages (content, user_id, thread_id, forum_id, sent_at, visible) " \
+          "VALUES (:content, :user_id, :thread_id, :forum_id, NOW(), TRUE)"
+    db.session.execute(text(sql), {"content":content, "user_id":user_id, "thread_id":thread_id, "forum_id":forum_id})
+    db.session.commit()
+    return True
