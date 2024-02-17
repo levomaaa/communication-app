@@ -8,7 +8,7 @@ import login
 
 def get_forums():
     sql = "SELECT F.id, F.content, U.name FROM forums F, users U " \
-          "WHERE F.user_id=U.id AND F.visible=TRUE"
+          "WHERE F.user_id=U.id AND F.visible=TRUE ORDER BY F.id"
     result = db.session.execute(text(sql))
     return result.fetchall()
 

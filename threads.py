@@ -11,7 +11,8 @@ def get_threads(forum_id_in):
     sql = "SELECT T.id, T.content, U.name " \
           "FROM threads T, users U " \
           "WHERE T.visible = TRUE " \
-          "AND T.forum_id = :forum_id_in AND U.id = T.user_id"
+          "AND T.forum_id = :forum_id_in AND U.id = T.user_id " \
+          "ORDER BY T.id"
     result = db.session.execute(text(sql), {"forum_id_in":forum_id_in})
     return result.fetchall()
 
