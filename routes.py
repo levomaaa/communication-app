@@ -4,7 +4,7 @@ import login
 import forums
 import threads
 import messages
-
+from datetime import datetime
 
 @app.route("/")
 def index():
@@ -99,7 +99,9 @@ def deleteforum(forum_id):
     
 @app.route("/forum/<int:forum_id>")
 def forum(forum_id):
-    return render_template("threads.html", threads=threads.get_threads(forum_id), forum=forums.get_forum(forum_id))
+    count = messages.get_message_count_of_thread()
+    latest_messages = messages.parse_last_message()
+    return render_template("threads.html", threads=threads.get_threads(forum_id), forum=forums.get_forum(forum_id), count=count, latest_messages=latest_messages)
     
 @app.route("/send_thread/<int:forum_id>", methods=["GET", "POST"])
 def send_thread(forum_id):

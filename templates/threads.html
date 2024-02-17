@@ -24,9 +24,9 @@ You are logged in as <b>{{ session.user_name }}</b>.
 <p>
 <i>Creator:</i> {{ thread[2] }}
 <p>
-<i>Messages: #TODO</i>
+<i>Messages:</i> {{ count[thread[0]] }}
 <p>
-<i>Last message: #TODO</i>
+<i>Last message:</i> <b>{{ latest_messages[thread[0]] }}</b>
 <p>
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
 {% if session.user_name == thread[2] %}

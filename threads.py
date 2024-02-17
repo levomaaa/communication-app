@@ -22,6 +22,11 @@ def get_thread(thread_id):
     result = db.session.execute(text(sql), {"thread_id":thread_id})
     return result.fetchall()
 
+def get_all_threads():
+    sql = "SELECT id FROM threads"
+    result = db.session.execute(text(sql))
+    return result.fetchall() 
+
 def get_forum_id(thread_id):
     sql = "SELECT forum_id FROM threads " \
           "WHERE id = :thread_id"

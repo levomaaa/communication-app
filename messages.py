@@ -26,3 +26,51 @@ def send(content, thread_id, forum_id):
     db.session.execute(text(sql), {"content":content, "user_id":user_id, "thread_id":thread_id, "forum_id":forum_id})
     db.session.commit()
     return True
+
+def get_message_count():
+    sql = "SELECT id, thread_id FROM messages " \
+          "WHERE visible = TRUE"
+    result = db.session.execute(text(sql))
+    return result.fetchall()
+
+def get_message_count_of_thread():
+    list = get_message_count()
+    thread_count = len(threads.get_all_threads())
+    count = [0] * (thread_count + 50)
+    for i in list:
+        t = i[1]
+        count[t] += 1
+    return count
+
+def get_last_message(thread_id):
+    sql = "SELECT sent_at FROM messages " \
+          "WHERE visible = TRUE AND thread_id = :thread_id " \
+          "ORDER BY sent_at DESC LIMIT 1"
+    result = db.session.execute(text(sql), {"thread_id":thread_id})
+    return result.fetchone()
+
+def parse_last_message():
+    list = threads.get_thread_count()
+    thread_count = len(threads.get_all_threads())
+    latest_messages = [0] * (thread_count + 50)
+    for i in list:
+        t = i[0]
+        time = get_last_message(t)
+        if time != None:
+            time = time.__str__()
+            time = time.replace('datetime', '')
+            time = time.replace('(', '')
+            time = time.replace(')', '')
+            time = time.replace('.', '')
+            time = time[:-1]
+            times = time.split()
+            for i in range(len(times)):
+                if len(times[i])<3:
+                    times[i] = "0" + times[i]
+                    
+            time = times[0] + "-" + times[1] + "-" + times[2] + " " + times[3] + ":" + times[4] + ":" + times[5]
+            time = time.replace(',', '')
+            latest_messages[t] = time
+        else:
+            latest_messages[t] = 'No messages yet'
+    return latest_messages
