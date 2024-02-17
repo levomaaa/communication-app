@@ -19,3 +19,13 @@ CREATE TABLE threads (
     forum_id INTEGER REFERENCES forums (id),
     visible BOOLEAN
 );
+
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    content TEXT,
+    user_id INTEGER REFERENCES users (id),
+    thread_id INTEGER REFERENCES threads (id),
+    forum_id INTEGER REFERENCES forums (id),
+    sent_at TIMESTAMP,
+    visible BOOLEAN
+);

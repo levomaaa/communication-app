@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for t in thread %}
+<h2>{{ t[1] }}</h2>
+<p>
+You are logged in as <b>{{ session.user_name }}</b>.
+<p>
+<a href="/">Return to main page</a>
+
+
+
+<form action="/new_message/{{ t[0] }}">
+    <button class="messagebutton" >Add new message</button>
+</form>
+{% endfor %}
+
+
+
+<hr>
+{% for message in messages %}
+<p>
+<i>Message:</i> {{ message[1] }}
+<p>
+<i>Creator:</i> {{ message[2] }}
+<p>
+<i>Time:</i> {{ message[3].strftime("%Y-%m-%d %H:%M:%S") }}
+<p>
+<input type="hidden" name="message_id" value="{{ message[0] }}">
+{% if session.user_name == message[2] %}
+<a href="/edit_message">Edit message</a>
+<a href="/delete_message">Delete message</a>
+
+{% endif %}
+<hr>
+{% endfor %}
+
+
+
+{% endblock %}

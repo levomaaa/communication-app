@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, url_for
 import login
 import forums
 import threads
+import messages
 
 
 @app.route("/")
@@ -39,7 +40,7 @@ def register():
         password2 = request.form["password2"]
         username_check = " ".join(username.split())
         password_check = " ".join(password1.split())            
-
+        
         if username == username_check and password1 == password_check and username.isspace() == False and password1.isspace() == False: #pituus viel
             if len(username)>0 or len(password1)>0:
                 if password1 != password2:
@@ -148,4 +149,8 @@ def deletethread(thread_id):
         return redirect(url_for("forum", forum_id=forum_id))
     else:
         return render_template("error.html", message="Failure deleting thread")
+  
+@app.route("/thread/<int:thread_id>")
+def thread(thread_id):
+    return render_template("messages.html", messages=messages.get_messages(thread_id), thread=threads.get_thread(thread_id))
   
