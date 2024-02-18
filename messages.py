@@ -93,3 +93,9 @@ def edit(message_id, edited_content):
     db.session.execute(text(sql), {"message_id":message_id, "edited_content":edited_content})
     db.session.commit()
     return True
+
+def delete(message_id):
+    sql = "UPDATE messages SET visible=FALSE WHERE id=:message_id"
+    db.session.execute(text(sql), {"message_id":message_id})
+    db.session.commit()
+    return True

@@ -193,3 +193,17 @@ def editmessage(message_id):
             return render_template("error.html", message="Failure editing message")
     else:
         return render_template("error.html", message="Message name is too short or consists only of spaces")
+
+@app.route("/delete_message/<int:message_id>")
+def delete_message_render(message_id):
+    return render_template("delete_message.html", message_id=message_id, message=messages.get_message(message_id))
+
+@app.route("/deletemessage/<int:message_id>", methods=["GET", "POST"])
+def deletemessage(message_id):
+    thread_id = messages.get_thread_id(message_id)
+    thread_id = thread_id[0]
+    if messages.delete(message_id):
+        return redirect(url_for("thread", thread_id=thread_id))
+    else:
+        return render_template("error.html", message="Failure deleting message")
+ 

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for msg in message %}
+
+<input type="hidden" name="message_id" value="{{ msg[0] }}">
+
+<p>Are you sure you want to delete the following message:
+<p>
+<b>{{ msg[1] }}</b>
+</p>
+<form action="/deletemessage/{{ msg[0] }}" method="post">
+{% endfor %}
+<p>
+<input type="submit" value="Yes">
+</form>
+<p>
+<a href="/">Return to main page</a>
+<p>
+<a href="/">Return to forum #TODO</a>
+<p>
+<a href="/">Return to thread #TODO</a>
+
+
+{% endblock %}
