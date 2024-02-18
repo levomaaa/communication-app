@@ -42,7 +42,7 @@ def register():
         password_check = " ".join(password1.split())            
         
         if username == username_check and password1 == password_check and username.isspace() == False and password1.isspace() == False: #pituus viel
-            if len(username)>0 or len(password1)>0:
+            if len(username)>0 and len(password1)>0:
                 if password1 != password2:
                     return render_template("error.html", message="Passwords do not match")
                 if login.register(username, password1):
