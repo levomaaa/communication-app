@@ -19,9 +19,9 @@ def get_forum(forum_id):
     return result.fetchall()
 
 def get_all_forums():
-    sql = "SELECT id FROM forums"
+    sql = "SELECT id FROM forums ORDER BY id DESC LIMIT 1"
     result = db.session.execute(text(sql))
-    return result.fetchall()   
+    return result.fetchone()   
 
 def send(content):
     user_id = login.user_id()

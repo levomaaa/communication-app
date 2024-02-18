@@ -23,9 +23,9 @@ def get_thread(thread_id):
     return result.fetchall()
 
 def get_all_threads():
-    sql = "SELECT id FROM threads"
+    sql = "SELECT id FROM threads ORDER BY id DESC LIMIT 1"
     result = db.session.execute(text(sql))
-    return result.fetchall() 
+    return result.fetchone() 
 
 def get_forum_id(thread_id):
     sql = "SELECT forum_id FROM threads " \
@@ -41,8 +41,10 @@ def get_thread_count():
 
 def get_thread_count_of_forum():
     list = get_thread_count()
-    forum_count = len(forums.get_all_forums())
-    count = [0] * (forum_count + 50)
+    forum_count = forums.get_all_forums()
+    if forum_count[0] == None:
+        forum_count[0] = 0
+    count = [0] * (forum_count[0] + 1)
     for i in list:
         t = i[1]
         count[t] += 1
