@@ -17,6 +17,12 @@ def get_messages(thread_id):
     result = db.session.execute(text(sql), {"thread_id":thread_id})
     return result.fetchall()
 
+def get_message(message_id):
+    sql = "SELECT id, content FROM messages " \
+          "WHERE id = :message_id"
+    result = db.session.execute(text(sql), {"message_id":message_id})
+    return result.fetchall()
+
 def send(content, thread_id, forum_id):
     user_id = login.user_id()
     if user_id == 0:
@@ -74,3 +80,16 @@ def parse_last_message():
         else:
             latest_messages[t] = 'No messages yet'
     return latest_messages
+
+def get_thread_id(message_id):
+    sql = "SELECT thread_id FROM messages " \
+          "WHERE id = :message_id"
+    result = db.session.execute(text(sql), {"message_id":message_id})
+    return result.fetchone()
+
+def edit(message_id, edited_content):
+    sql = "UPDATE messages SET content = :edited_content " \
+          "WHERE id = :message_id"
+    db.session.execute(text(sql), {"message_id":message_id, "edited_content":edited_content})
+    db.session.commit()
+    return True

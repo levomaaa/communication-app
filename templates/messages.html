@@ -31,8 +31,8 @@ You are logged in as <b>{{ session.user_name }}</b>.
 <p>
 <input type="hidden" name="message_id" value="{{ message[0] }}">
 {% if session.user_name == message[2] %}
-<a href="/edit_message">Edit message #TODO</a>
-<a href="/delete_message">Delete message #TODO</a>
+<a href="/edit_message/{{ message[0] }}">Edit message</a>
+<a href="/delete_message/ {{ message[0] }}">Delete message #TODO</a>
 
 {% endif %}
 <hr>

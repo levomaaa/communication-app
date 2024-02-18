@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for msg in message %}
+
+<input type="hidden" name="message_id" value="{{ msg[0] }}">
+
+<h2>Edit thread</h2>
+<form action="/editmessage/{{ msg[0] }}" method="post">
+Thread name: <br><input type="text" name="messagename_edit" value="{{ msg[1] }}">
+{% endfor %}
+<p>
+<input type="submit" value="Post">
+</form>
+<p>
+
+
+<a href="/">Return to main page</a>
+<p>
+<a href="/">Return to thread #TODO</a>
+
+{% endblock %}

@@ -68,7 +68,7 @@ def send():
         else:
             return render_template("error.html", message="Failure creating forum")
     else:
-        return render_template("error.html", message="Forum name is too short")
+        return render_template("error.html", message="Forum name is too short or consists only of spaces")
 
 @app.route("/edit_forum/<int:forum_id>")
 def edit_forum_render(forum_id):
@@ -113,7 +113,7 @@ def send_thread(forum_id):
         else:
             return render_template("error.html", message="Failure creating thread")
     else:
-        return render_template("error.html", message="Thread name is too short")
+        return render_template("error.html", message="Thread name is too short or consists only of spaces")
 
 
 @app.route("/new_thread/<int:forum_id>")
@@ -136,7 +136,7 @@ def editthread(thread_id):
         else:
             return render_template("error.html", message="Failure editing thread")
     else:
-        return render_template("error.html", message="Thread name is too short")
+        return render_template("error.html", message="Thread name is too short or consists only of spaces")
 
 
 @app.route("/delete_thread/<int:thread_id>")
@@ -174,4 +174,22 @@ def send_message(thread_id):
         else:
             return render_template("error.html", message="Failure creating thread")
     else:
-        return render_template("error.html", message="Message name is too short")
+        return render_template("error.html", message="Message name is too short or consists only of spaces")
+
+@app.route("/edit_message/<int:message_id>")
+def edit_message_render(message_id):
+    return render_template("edit_message.html", message_id=message_id, message=messages.get_message(message_id))
+
+@app.route("/editmessage/<int:message_id>", methods=["GET", "POST"])
+def editmessage(message_id):
+    thread_id = messages.get_thread_id(message_id)
+    thread_id = thread_id[0]
+    edited_content = request.form["messagename_edit"]
+    " ".join(edited_content.split())
+    if len(edited_content)>0 and edited_content.isspace() == False:
+        if messages.edit(message_id,edited_content):
+            return redirect(url_for("thread", thread_id=thread_id))
+        else:
+            return render_template("error.html", message="Failure editing message")
+    else:
+        return render_template("error.html", message="Message name is too short or consists only of spaces")
