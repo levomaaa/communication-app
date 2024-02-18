@@ -9,7 +9,7 @@ You are logged in as <b>{{ session.user_name }}</b>.
 <a href="/">Return to main page</a>
 <p>
 {% for f in forum %}
-<a href="/forum/{{ f[0] }}">Return to {{ f[1] }} forum</a>
+<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
 {% endfor %}
 
 

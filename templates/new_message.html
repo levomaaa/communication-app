@@ -12,4 +12,13 @@ Message: <br><input type="text" name="messagename">
 
 <p>
 <a href="/">Return to main page</a>
+<p>
+{% for f in forum %}
+<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
+{% endfor %}
+<p>
+{% for t in thread %}
+<a href="/thread/{{ t[0] }}">Return to <b>{{ t[1] }}</b> thread</a>
+{% endfor %}
+
 {% endblock %}

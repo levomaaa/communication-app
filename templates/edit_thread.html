@@ -17,5 +17,10 @@ Thread name: <br><input type="text" name="threadname_edit" value="{{ thread[1] }
 
 
 <a href="/">Return to main page</a>
+<p>
+{% for f in forum %}
+<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
+{% endfor %}
+
 
 {% endblock %}

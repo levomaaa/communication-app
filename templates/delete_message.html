@@ -17,9 +17,13 @@
 <p>
 <a href="/">Return to main page</a>
 <p>
-<a href="/">Return to forum #TODO</a>
+{% for f in forum %}
+<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
+{% endfor %}
 <p>
-<a href="/">Return to thread #TODO</a>
+{% for t in thread %}
+<a href="/thread/{{ t[0] }}">Return to <b>{{ t[1] }}</b> thread</a>
+{% endfor %}
 
 
 {% endblock %}

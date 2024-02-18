@@ -18,7 +18,7 @@ You are logged in as <b>{{ session.user_name }}</b>.
 
 <hr>
 {% for thread in threads %}
-<a href="/thread/{{ thread[0] }}">To {{ thread[1] }} thread</a>
+<a href="/thread/{{ thread[0] }}">To <b>{{ thread[1] }}</b> thread</a>
 <p>
 <i>Thread:</i> {{ thread[1] }}
 <p>

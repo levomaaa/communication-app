@@ -122,7 +122,9 @@ def new_thread(forum_id):
 
 @app.route("/edit_thread/<int:thread_id>")
 def edit_thread_render(thread_id):
-    return render_template("edit_thread.html", thread_id=thread_id, threads=threads.get_thread(thread_id))
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    return render_template("edit_thread.html", thread_id=thread_id, threads=threads.get_thread(thread_id), forum=forums.get_forum(forum_id))
 
 @app.route("/editthread/<int:thread_id>", methods=["GET", "POST"])
 def editthread(thread_id):
@@ -141,7 +143,9 @@ def editthread(thread_id):
 
 @app.route("/delete_thread/<int:thread_id>")
 def delete_thread_render(thread_id):
-    return render_template("delete_thread.html", thread_id=thread_id, threads=threads.get_thread(thread_id))
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    return render_template("delete_thread.html", thread_id=thread_id, threads=threads.get_thread(thread_id), forum=forums.get_forum(forum_id))
 
 @app.route("/deletethread/<int:thread_id>", methods=["GET", "POST"])
 def deletethread(thread_id):
@@ -160,7 +164,9 @@ def thread(thread_id):
 
 @app.route("/new_message/<int:thread_id>")
 def new_message(thread_id):
-    return render_template("new_message.html", thread=threads.get_thread(thread_id))
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    return render_template("new_message.html", thread=threads.get_thread(thread_id), forum=forums.get_forum(forum_id))
 
 @app.route("/send_message/<int:thread_id>", methods=["GET", "POST"])
 def send_message(thread_id):
@@ -178,7 +184,11 @@ def send_message(thread_id):
 
 @app.route("/edit_message/<int:message_id>")
 def edit_message_render(message_id):
-    return render_template("edit_message.html", message_id=message_id, message=messages.get_message(message_id))
+    thread_id = messages.get_thread_id(message_id)
+    thread_id = thread_id[0]
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    return render_template("edit_message.html", message_id=message_id, message=messages.get_message(message_id), thread=threads.get_thread(thread_id), forum=forums.get_forum(forum_id))
 
 @app.route("/editmessage/<int:message_id>", methods=["GET", "POST"])
 def editmessage(message_id):
@@ -196,7 +206,11 @@ def editmessage(message_id):
 
 @app.route("/delete_message/<int:message_id>")
 def delete_message_render(message_id):
-    return render_template("delete_message.html", message_id=message_id, message=messages.get_message(message_id))
+    thread_id = messages.get_thread_id(message_id)
+    thread_id = thread_id[0]
+    forum_id = threads.get_forum_id(thread_id)
+    forum_id = forum_id[0]
+    return render_template("delete_message.html", message_id=message_id, message=messages.get_message(message_id), thread=threads.get_thread(thread_id), forum=forums.get_forum(forum_id))
 
 @app.route("/deletemessage/<int:message_id>", methods=["GET", "POST"])
 def deletemessage(message_id):
