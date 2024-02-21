@@ -19,7 +19,7 @@ def get_forum(forum_id):
     return result.fetchall()
 
 def get_all_forums():
-    sql = "SELECT id FROM forums ORDER BY id DESC LIMIT 1"
+    sql = "SELECT MAX(id) FROM forums"
     result = db.session.execute(text(sql))
     return result.fetchone()   
 

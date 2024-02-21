@@ -23,9 +23,9 @@ def get_thread(thread_id):
     return result.fetchall()
 
 def get_all_threads():
-    sql = "SELECT id FROM threads ORDER BY id DESC LIMIT 1"
+    sql = "SELECT MAX(id) FROM threads"
     result = db.session.execute(text(sql))
-    return result.fetchone() 
+    return result.fetchone()   
 
 def get_forum_id(thread_id):
     sql = "SELECT forum_id FROM threads " \
