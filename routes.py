@@ -252,3 +252,8 @@ def deletemessage(message_id):
     else:
         return render_template("error.html", message="Failure deleting message")
  
+@app.route("/adminpage")
+def adminpage():
+    #count = adminthreads.get_message_count()
+    return render_template("adminpage.html")#, threads=adminthreads.get_threads(), count=count)
+   

@@ -4,7 +4,7 @@
 {% for msg in message %}
 
 <input type="hidden" name="message_id" value="{{ msg[0] }}">
-{% if session.user_id == msg[2] %}
+{% if session.user_id == msg[2] or session.user_role == 1 %}
 <p>Are you sure you want to delete the following message:
 <p>
 <b>{{ msg[1] }}</b>

@@ -42,7 +42,7 @@ def register(username, password):
             db.session.commit()
         except:
             return False
-    else:
+    else: # First user created will be an admin because the application is only used locally at the moment
         try:
             sql = "INSERT INTO users (name, password, role) VALUES (:username, :password, 1)"
             db.session.execute(text(sql), {"username":username, "password":hash_value})

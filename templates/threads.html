@@ -29,7 +29,7 @@ You are logged in as <b>{{ session.user_name }}</b>.
 <i>Last message:</i> <b>{{ latest_messages[thread[0]] }}</b>
 <p>
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
-{% if session.user_name == thread[2] %}
+{% if session.user_name == thread[2] or session.user_role == 1 %}
 <a href="/edit_thread/{{ thread[0] }}">Edit thread</a>
 <a href="/delete_thread/{{ thread[0] }}">Delete thread</a>
 

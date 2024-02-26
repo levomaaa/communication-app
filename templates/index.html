@@ -3,6 +3,10 @@
 
 <h2>Main page</h2>
 
+{% if session.user_role == 1 %}
+<a href="/adminpage">To <b>Adminpage</b></a>
+{% endif %}
+<p>
 {% if session.user_id %}
 You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</a>
 
@@ -22,7 +26,7 @@ You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</
 <i>Threads:</i> {{ count[forum[0]] }}
 <p>
 
-{% if session.user_name == forum[2] %}
+{% if session.user_name == forum[2] or session.user_role == 1 %}
 <a href="/edit_forum/{{ forum[0] }}">Edit forum</a>
 <a href="/delete_forum/{{ forum[0] }}">Delete forum</a>
 

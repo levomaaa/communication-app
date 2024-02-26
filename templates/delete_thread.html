@@ -4,7 +4,7 @@
 {% for thread in threads %}
 
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
-{% if session.user_id == thread[2] %}
+{% if session.user_id == thread[2] or session.user_role == 1 %}
 <p>Are you sure you want to delete the <b>{{ thread[1] }}</b> thread?</p>
 <form action="/deletethread/{{ thread[0] }}" method="post">
 

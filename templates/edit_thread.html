@@ -4,7 +4,7 @@
 {% for thread in threads %}
 
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
-{% if session.user_id == thread[2] %}
+{% if session.user_id == thread[2] or session.user_role == 1 %}
 <h2>Edit thread</h2>
 <form action="/editthread/{{ thread[0] }}" method="post">
 Thread name: <br><input type="text" name="threadname_edit" value="{{ thread[1] }}">
