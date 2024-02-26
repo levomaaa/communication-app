@@ -7,6 +7,7 @@
 Thread name: <br><input type="text" name="threadname">
 <p>
 <input type="submit" value="Post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endfor %}
 

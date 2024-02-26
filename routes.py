@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 import login
 import forums
 import threads
@@ -60,6 +60,7 @@ def new():
 
 @app.route("/send", methods=["POST"])
 def send():
+    login.check_csrf()
     content = request.form["forumname"]
     " ".join(content.split())
     if len(content)>0 and content.isspace() == False:
@@ -76,6 +77,7 @@ def edit_forum_render(forum_id):
 
 @app.route("/editforum/<int:forum_id>", methods=["GET", "POST"])
 def editforum(forum_id):
+    login.check_csrf()
     edited_content = request.form["forumname_edit"]
     " ".join(edited_content.split())
     if len(edited_content)>0 and edited_content.isspace() == False:
@@ -92,6 +94,7 @@ def delete_forum_render(forum_id):
 
 @app.route("/deleteforum/<int:forum_id>", methods=["GET", "POST"])
 def deleteforum(forum_id):
+    login.check_csrf()
     if forums.delete(forum_id):
         return redirect("/")
     else:
@@ -105,6 +108,7 @@ def forum(forum_id):
     
 @app.route("/send_thread/<int:forum_id>", methods=["GET", "POST"])
 def send_thread(forum_id):
+    login.check_csrf()
     content = request.form["threadname"]
     " ".join(content.split())
     if len(content)>0 and content.isspace() == False:
@@ -128,6 +132,7 @@ def edit_thread_render(thread_id):
 
 @app.route("/editthread/<int:thread_id>", methods=["GET", "POST"])
 def editthread(thread_id):
+    login.check_csrf()
     forum_id = threads.get_forum_id(thread_id)
     forum_id = forum_id[0]
     edited_content = request.form["threadname_edit"]
@@ -149,6 +154,7 @@ def delete_thread_render(thread_id):
 
 @app.route("/deletethread/<int:thread_id>", methods=["GET", "POST"])
 def deletethread(thread_id):
+    login.check_csrf()
     forum_id = threads.get_forum_id(thread_id)
     forum_id = forum_id[0]
     if threads.delete(thread_id):
@@ -170,6 +176,7 @@ def new_message(thread_id):
 
 @app.route("/send_message/<int:thread_id>", methods=["GET", "POST"])
 def send_message(thread_id):
+    login.check_csrf()
     forum_id = threads.get_forum_id(thread_id)
     forum_id = forum_id[0]
     content = request.form["messagename"]
@@ -192,6 +199,7 @@ def edit_message_render(message_id):
 
 @app.route("/editmessage/<int:message_id>", methods=["GET", "POST"])
 def editmessage(message_id):
+    login.check_csrf()
     thread_id = messages.get_thread_id(message_id)
     thread_id = thread_id[0]
     edited_content = request.form["messagename_edit"]
@@ -214,6 +222,7 @@ def delete_message_render(message_id):
 
 @app.route("/deletemessage/<int:message_id>", methods=["GET", "POST"])
 def deletemessage(message_id):
+    login.check_csrf()
     thread_id = messages.get_thread_id(message_id)
     thread_id = thread_id[0]
     if messages.delete(message_id):

@@ -13,6 +13,7 @@
 {% endfor %}
 <p>
 <input type="submit" value="Yes">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
 <a href="/">Return to main page</a>
@@ -24,6 +25,7 @@
 {% for t in thread %}
 <a href="/thread/{{ t[0] }}">Return to <b>{{ t[1] }}</b> thread</a>
 {% endfor %}
+
 
 
 {% endblock %}

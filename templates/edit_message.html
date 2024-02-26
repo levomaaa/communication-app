@@ -11,6 +11,7 @@ Thread name: <br><input type="text" name="messagename_edit" value="{{ msg[1] }}"
 {% endfor %}
 <p>
 <input type="submit" value="Post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
 
@@ -23,5 +24,6 @@ Thread name: <br><input type="text" name="messagename_edit" value="{{ msg[1] }}"
 {% for t in thread %}
 <a href="/thread/{{ t[0] }}">Return to <b>{{ t[1] }}</b> thread</a>
 {% endfor %}
+
 
 {% endblock %}

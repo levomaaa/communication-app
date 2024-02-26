@@ -2,7 +2,6 @@
 {% block content %}
 
 {% for message in messages %}
-
 <input type="hidden" name="forum_id" value="{{ message[0] }}">
 
 <h2>Edit forum</h2>
@@ -11,10 +10,9 @@ Forum name: <br><input type="text" name="forumname_edit" value="{{ message[1] }}
 {% endfor %}
 <p>
 <input type="submit" value="Post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
-
-
 
 <a href="/">Return to main page</a>
 

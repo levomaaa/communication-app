@@ -10,6 +10,7 @@
 {% endfor %}
 <p>
 <input type="submit" value="Yes">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
 <a href="/">Return to main page</a>

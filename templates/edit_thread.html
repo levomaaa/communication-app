@@ -11,6 +11,7 @@ Thread name: <br><input type="text" name="threadname_edit" value="{{ thread[1] }
 {% endfor %}
 <p>
 <input type="submit" value="Post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
 
