@@ -41,14 +41,18 @@ def register():
         username_check = " ".join(username.split())
         password_check = " ".join(password1.split())            
         
-        if username == username_check and password1 == password_check and username.isspace() == False and password1.isspace() == False: #pituus viel
+        if username == username_check and password1 == password_check and username.isspace() == False and password1.isspace() == False:
             if len(username)>0 and len(password1)>0:
-                if password1 != password2:
-                    return render_template("error.html", message="Passwords do not match")
-                if login.register(username, password1):
-                    return redirect("/")
+                if len(username)<101 and len(password1)<101:
+                    if password1 != password2:
+                        return render_template("error.html", message="Passwords do not match")
+                    if login.register(username, password1):
+                        return redirect("/")
+                    else:
+                        return render_template("error.html", message="Username is already in use")
                 else:
-                    return render_template("error.html", message="Username is already in use")
+                    return render_template("error.html", message="Username or password is too long")
+
             else:
                 return render_template("error.html", message="Username or password can't be empty")
         else:
@@ -64,10 +68,13 @@ def send():
     content = request.form["forumname"]
     " ".join(content.split())
     if len(content)>0 and content.isspace() == False:
-        if forums.send(content):
-            return redirect("/")
+        if len(content)<101:
+            if forums.send(content):
+                return redirect("/")
+            else:
+                return render_template("error.html", message="Failure creating forum")
         else:
-            return render_template("error.html", message="Failure creating forum")
+            return render_template("error.html", message="Forum name is too long")
     else:
         return render_template("error.html", message="Forum name is too short or consists only of spaces")
 
@@ -81,12 +88,15 @@ def editforum(forum_id):
     edited_content = request.form["forumname_edit"]
     " ".join(edited_content.split())
     if len(edited_content)>0 and edited_content.isspace() == False:
-        if forums.edit(forum_id,edited_content):
-            return redirect("/")
+        if len(edited_content)<101:
+            if forums.edit(forum_id,edited_content):
+                return redirect("/")
+            else:
+                return render_template("error.html", message="Failure editing forum")
         else:
-            return render_template("error.html", message="Failure editing forum")
+            return render_template("error.html", message="Forum name is too long")
     else:
-        return render_template("error.html", message="Forum name is too short")
+        return render_template("error.html", message="Forum name is too short or consists only of spaces")
 
 @app.route("/delete_forum/<int:forum_id>")
 def delete_forum_render(forum_id):
@@ -112,10 +122,13 @@ def send_thread(forum_id):
     content = request.form["threadname"]
     " ".join(content.split())
     if len(content)>0 and content.isspace() == False:
-        if threads.send(content,forum_id):
-            return redirect(url_for("forum", forum_id=forum_id))
+        if len(content)<101:
+            if threads.send(content,forum_id):
+                return redirect(url_for("forum", forum_id=forum_id))
+            else:
+                return render_template("error.html", message="Failure creating thread")
         else:
-            return render_template("error.html", message="Failure creating thread")
+            return render_template("error.html", message="Thread name is too long")
     else:
         return render_template("error.html", message="Thread name is too short or consists only of spaces")
 
@@ -138,10 +151,13 @@ def editthread(thread_id):
     edited_content = request.form["threadname_edit"]
     " ".join(edited_content.split())
     if len(edited_content)>0 and edited_content.isspace() == False:
-        if threads.edit(thread_id,edited_content):
-            return redirect(url_for("forum", forum_id=forum_id))
+        if len(edited_content)<101:
+            if threads.edit(thread_id,edited_content):
+                return redirect(url_for("forum", forum_id=forum_id))
+            else:
+                return render_template("error.html", message="Failure editing thread")
         else:
-            return render_template("error.html", message="Failure editing thread")
+            return render_template("error.html", message="Thread name is too long")
     else:
         return render_template("error.html", message="Thread name is too short or consists only of spaces")
 
@@ -182,12 +198,15 @@ def send_message(thread_id):
     content = request.form["messagename"]
     " ".join(content.split())
     if len(content)>0 and content.isspace() == False:
-        if messages.send(content,thread_id, forum_id):
-            return redirect(url_for("thread", thread_id=thread_id))
+        if len(content)<5001:
+            if messages.send(content,thread_id, forum_id):
+                return redirect(url_for("thread", thread_id=thread_id))
+            else:
+                return render_template("error.html", message="Failure creating thread")
         else:
-            return render_template("error.html", message="Failure creating thread")
+            return render_template("error.html", message="Message is too long")
     else:
-        return render_template("error.html", message="Message name is too short or consists only of spaces")
+        return render_template("error.html", message="Message is too short or consists only of spaces")
 
 @app.route("/edit_message/<int:message_id>")
 def edit_message_render(message_id):
@@ -205,12 +224,15 @@ def editmessage(message_id):
     edited_content = request.form["messagename_edit"]
     " ".join(edited_content.split())
     if len(edited_content)>0 and edited_content.isspace() == False:
-        if messages.edit(message_id,edited_content):
-            return redirect(url_for("thread", thread_id=thread_id))
+        if len(edited_content)<5001:
+            if messages.edit(message_id,edited_content):
+                return redirect(url_for("thread", thread_id=thread_id))
+            else:
+                return render_template("error.html", message="Failure editing message")
         else:
-            return render_template("error.html", message="Failure editing message")
+            return render_template("error.html", message="Message is too long")
     else:
-        return render_template("error.html", message="Message name is too short or consists only of spaces")
+        return render_template("error.html", message="Message is too short or consists only of spaces")
 
 @app.route("/delete_message/<int:message_id>")
 def delete_message_render(message_id):
