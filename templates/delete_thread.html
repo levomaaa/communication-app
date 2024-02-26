@@ -4,13 +4,15 @@
 {% for thread in threads %}
 
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
-
+{% if session.user_id == thread[2] %}
 <p>Are you sure you want to delete the <b>{{ thread[1] }}</b> thread?</p>
 <form action="/deletethread/{{ thread[0] }}" method="post">
-{% endfor %}
+
 <p>
 <input type="submit" value="Yes">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% endif %}
+{% endfor %}
 </form>
 <p>
 <a href="/">Return to main page</a>

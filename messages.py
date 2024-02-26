@@ -18,8 +18,8 @@ def get_messages(thread_id):
     return result.fetchall()
 
 def get_message(message_id):
-    sql = "SELECT id, content FROM messages " \
-          "WHERE id = :message_id"
+    sql = "SELECT M.id, M.content, U.id FROM messages M, users U " \
+          "WHERE M.id = :message_id AND M.user_id = U.id"
     result = db.session.execute(text(sql), {"message_id":message_id})
     return result.fetchall()
 

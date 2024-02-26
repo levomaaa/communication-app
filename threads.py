@@ -17,8 +17,8 @@ def get_threads(forum_id_in):
     return result.fetchall()
 
 def get_thread(thread_id):
-    sql = "SELECT id, content FROM threads " \
-          "WHERE id = :thread_id"
+    sql = "SELECT T.id, T.content, U.id FROM threads T, users U " \
+          "WHERE T.id = :thread_id AND T.user_id = U.id"
     result = db.session.execute(text(sql), {"thread_id":thread_id})
     return result.fetchall()
 

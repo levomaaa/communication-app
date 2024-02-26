@@ -1,18 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% for message in messages %}
+{% for forum in forums %}
 
-<input type="hidden" name="forum_id" value="{{ message[0] }}">
-
-<p>Are you sure you want to delete the <b>{{ message[1] }}</b> forum?</p>
-<form action="/deleteforum/{{ message[0] }}" method="post">
-{% endfor %}
+<input type="hidden" name="forum_id" value="{{ forum[0] }}">
+{% if session.user_id == forum[2] %}
+<p>Are you sure you want to delete the <b>{{ forum[1] }}</b> forum?</p>
+<form action="/deleteforum/{{ forum[0] }}" method="post">
 <p>
 <input type="submit" value="Yes">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% endif %}
+{% endfor %}
 </form>
 <p>
+
 <a href="/">Return to main page</a>
 
 {% endblock %}

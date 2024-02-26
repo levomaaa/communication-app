@@ -4,16 +4,18 @@
 {% for msg in message %}
 
 <input type="hidden" name="message_id" value="{{ msg[0] }}">
-
+{% if session.user_id == msg[2] %}
 <p>Are you sure you want to delete the following message:
 <p>
 <b>{{ msg[1] }}</b>
 </p>
 <form action="/deletemessage/{{ msg[0] }}" method="post">
-{% endfor %}
+
 <p>
 <input type="submit" value="Yes">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% endif %}
+{% endfor %}
 </form>
 <p>
 <a href="/">Return to main page</a>

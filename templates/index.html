@@ -11,20 +11,20 @@ You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</
 </form>
 
 <hr>
-{% for message in messages %}
-<a href="/forum/{{ message[0] }}">To <b>{{ message[1] }}</b> forum</a>
+{% for forum in forums %}
+<a href="/forum/{{ forum[0] }}">To <b>{{ forum[1] }}</b> forum</a>
 <p>
-<i>Forum:</i> {{ message[1] }}
+<i>Forum:</i> {{ forum[1] }}
 <p>
-<i>Creator:</i> {{ message[2] }}
+<i>Creator:</i> {{ forum[2] }}
 <p>
-<input type="hidden" name="forum_id" value="{{ message[0] }}">
-<i>Threads:</i> {{ count[message[0]] }}
+<input type="hidden" name="forum_id" value="{{ forum[0] }}">
+<i>Threads:</i> {{ count[forum[0]] }}
 <p>
 
-{% if session.user_name == message[2] %}
-<a href="/edit_forum/{{ message[0] }}">Edit forum</a>
-<a href="/delete_forum/{{ message[0] }}">Delete forum</a>
+{% if session.user_name == forum[2] %}
+<a href="/edit_forum/{{ forum[0] }}">Edit forum</a>
+<a href="/delete_forum/{{ forum[0] }}">Delete forum</a>
 
 {% endif %}
 <hr>

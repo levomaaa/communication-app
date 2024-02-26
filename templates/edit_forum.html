@@ -1,18 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% for message in messages %}
-<input type="hidden" name="forum_id" value="{{ message[0] }}">
-
+{% for forum in forums %}
+<input type="hidden" name="forum_id" value="{{ forum[0] }}">
+{% if session.user_id == forum[2] %}
 <h2>Edit forum</h2>
-<form action="/editforum/{{ message[0] }}" method="post">
-Forum name: <br><input type="text" name="forumname_edit" value="{{ message[1] }}">
-{% endfor %}
+<form action="/editforum/{{ forum[0] }}" method="post">
+Forum name: <br><input type="text" name="forumname_edit" value="{{ forum[1] }}">
+
 <p>
 <input type="submit" value="Post">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% endif %}
+{% endfor %}
 </form>
 <p>
+
 
 <a href="/">Return to main page</a>
 

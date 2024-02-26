@@ -13,8 +13,8 @@ def get_forums():
     return result.fetchall()
 
 def get_forum(forum_id):
-    sql = "SELECT id, content FROM forums " \
-          "WHERE id = :forum_id"
+    sql = "SELECT F.id, F.content, U.id FROM forums F, users U " \
+          "WHERE F.id = :forum_id AND F.user_id = U.id"
     result = db.session.execute(text(sql), {"forum_id":forum_id})
     return result.fetchall()
 

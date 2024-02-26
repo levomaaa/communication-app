@@ -4,14 +4,16 @@
 {% for msg in message %}
 
 <input type="hidden" name="message_id" value="{{ msg[0] }}">
-
+{% if session.user_id == msg[2] %}
 <h2>Edit thread</h2>
 <form action="/editmessage/{{ msg[0] }}" method="post">
 Thread name: <br><input type="text" name="messagename_edit" value="{{ msg[1] }}">
-{% endfor %}
+
 <p>
 <input type="submit" value="Post">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% endif %}
+{% endfor %}
 </form>
 <p>
 

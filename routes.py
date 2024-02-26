@@ -9,7 +9,7 @@ from datetime import datetime
 @app.route("/")
 def index():
     count = threads.get_thread_count_of_forum()
-    return render_template("index.html", messages=forums.get_forums(), count=count)
+    return render_template("index.html", forums=forums.get_forums(), count=count)
     
 @app.route("/login", methods=["GET", "POST"])
 def log_in():
@@ -80,7 +80,7 @@ def send():
 
 @app.route("/edit_forum/<int:forum_id>")
 def edit_forum_render(forum_id):
-    return render_template("edit_forum.html", forum_id=forum_id, messages=forums.get_forum(forum_id))
+    return render_template("edit_forum.html", forum_id=forum_id, forums=forums.get_forum(forum_id))
 
 @app.route("/editforum/<int:forum_id>", methods=["GET", "POST"])
 def editforum(forum_id):
@@ -100,7 +100,7 @@ def editforum(forum_id):
 
 @app.route("/delete_forum/<int:forum_id>")
 def delete_forum_render(forum_id):
-    return render_template("delete_forum.html", forum_id=forum_id, messages=forums.get_forum(forum_id))
+    return render_template("delete_forum.html", forum_id=forum_id, forums=forums.get_forum(forum_id))
 
 @app.route("/deleteforum/<int:forum_id>", methods=["GET", "POST"])
 def deleteforum(forum_id):

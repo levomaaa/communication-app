@@ -15,7 +15,7 @@ def login(username,password):
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):
-            session["user_id"] = user.id
+            session["user_id"] = user[0]
             session["user_name"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return True
