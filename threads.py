@@ -43,8 +43,10 @@ def get_thread_count_of_forum():
     list = get_thread_count()
     forum_count = forums.get_all_forums()
     if forum_count[0] == None:
-        forum_count[0] = 0
-    count = [0] * (forum_count[0] + 1)
+        count_variable = 0
+    else:
+        count_variable = forum_count[0]
+    count = [0] * (count_variable + 1)
     for i in list:
         t = i[1]
         count[t] += 1

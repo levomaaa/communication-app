@@ -43,8 +43,10 @@ def get_message_count_of_thread():
     list = get_message_count()
     thread_count = threads.get_all_threads()
     if thread_count[0] == None:
-        thread_count[0] = 0
-    count = [0] * (thread_count[0] + 1)
+        count_variable = 0
+    else:
+        count_variable = thread_count[0]
+    count = [0] * (count_variable + 1)
     for i in list:
         t = i[1]
         count[t] += 1
@@ -61,8 +63,10 @@ def parse_last_message():
     list = threads.get_thread_count()
     thread_count = threads.get_all_threads()
     if thread_count[0] == None:
-        thread_count[0] = 0
-    latest_messages = [0] * (thread_count[0] + 1)
+        count_variable = 0
+    else: 
+        count_variable = thread_count[0]
+    latest_messages = [0] * (count_variable + 1)
     for i in list:
         t = i[0]
         time = get_last_message(t)
