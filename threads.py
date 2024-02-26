@@ -63,14 +63,19 @@ def send(content, forum_id):
     return True
 
 def edit(thread_id, edited_content):
+    user_id = session["user_id"]
+    user_role = session["user_role"]
     sql = "UPDATE threads SET content = :edited_content " \
-          "WHERE id = :thread_id"
-    db.session.execute(text(sql), {"thread_id":thread_id, "edited_content":edited_content})
+          "WHERE id = :thread_id AND (user_id = :user_id OR :user_role = 1)"
+    db.session.execute(text(sql), {"thread_id":thread_id, "edited_content":edited_content, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True
 
 def delete(thread_id):
-    sql = "UPDATE threads SET visible=FALSE WHERE id=:thread_id"
-    db.session.execute(text(sql), {"thread_id":thread_id})
+    user_id = session["user_id"]
+    user_role = session["user_role"]
+    sql = "UPDATE threads SET visible = FALSE WHERE id=:thread_id " \
+          "AND (user_id = :user_id OR :user_role = 1)"
+    db.session.execute(text(sql), {"thread_id":thread_id, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True

@@ -96,14 +96,19 @@ def get_thread_id(message_id):
     return result.fetchone()
 
 def edit(message_id, edited_content):
+    user_id = session["user_id"]
+    user_role = session["user_role"]
     sql = "UPDATE messages SET content = :edited_content " \
-          "WHERE id = :message_id"
-    db.session.execute(text(sql), {"message_id":message_id, "edited_content":edited_content})
+          "WHERE id = :message_id AND (user_id = :user_id OR :user_role = 1)"
+    db.session.execute(text(sql), {"message_id":message_id, "edited_content":edited_content, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True
 
 def delete(message_id):
-    sql = "UPDATE messages SET visible=FALSE WHERE id=:message_id"
-    db.session.execute(text(sql), {"message_id":message_id})
+    user_id = session["user_id"]
+    user_role = session["user_role"]
+    sql = "UPDATE messages SET visible = FALSE WHERE id = :message_id " \
+          "AND (user_id = :user_id OR :user_role = 1)"
+    db.session.execute(text(sql), {"message_id":message_id, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True

@@ -34,14 +34,19 @@ def send(content):
     return True
 
 def edit(forum_id, edited_content):
+    user_id = session["user_id"]
+    user_role = session["user_role"]
     sql = "UPDATE forums SET content = :edited_content " \
-          "WHERE id = :forum_id"
-    db.session.execute(text(sql), {"forum_id":forum_id, "edited_content":edited_content})
+          "WHERE id = :forum_id AND (user_id = :user_id OR :user_role = 1)"
+    db.session.execute(text(sql), {"forum_id":forum_id, "edited_content":edited_content, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True
 
 def delete(forum_id):
-    sql = "UPDATE forums SET visible=FALSE WHERE id=:forum_id"
-    db.session.execute(text(sql), {"forum_id":forum_id})
+    user_id = session["user_id"]
+    user_role = session["user_role"]
+    sql = "UPDATE forums SET visible=FALSE WHERE id=:forum_id " \
+          "AND (user_id = :user_id OR :user_role = 1)"
+    db.session.execute(text(sql), {"forum_id":forum_id, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True
