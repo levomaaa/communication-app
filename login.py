@@ -7,7 +7,7 @@ from sqlalchemy.sql import text
 import secrets
 
 def login(username,password):
-    sql = "SELECT id, password FROM users WHERE name=:username"
+    sql = "SELECT id, password, role FROM users WHERE name=:username"
     result = db.session.execute(text(sql), {"username":username})
     user = result.fetchone()    
     if not user:
@@ -18,6 +18,7 @@ def login(username,password):
             session["user_id"] = user[0]
             session["user_name"] = username
             session["csrf_token"] = secrets.token_hex(16)
+            session["user_role"] = user[2]
             return True
         else:
             return False
@@ -26,6 +27,7 @@ def logout():
     del session["user_id"]
     del session["user_name"]
     del session["csrf_token"]
+    del session["user_role"]
     return redirect("/")
 
 def user_id():
@@ -33,14 +35,27 @@ def user_id():
 
 def register(username, password):
     hash_value = generate_password_hash(password)
-    try:
-        sql = "INSERT INTO users (name, password) VALUES (:username, :password)"
-        db.session.execute(text(sql), {"username":username, "password":hash_value})
-        db.session.commit()
-    except:
-        return False
+    if user_count() != None:
+        try:
+            sql = "INSERT INTO users (name, password) VALUES (:username, :password)"
+            db.session.execute(text(sql), {"username":username, "password":hash_value})
+            db.session.commit()
+        except:
+            return False
+    else:
+        try:
+            sql = "INSERT INTO users (name, password, role) VALUES (:username, :password, 1)"
+            db.session.execute(text(sql), {"username":username, "password":hash_value})
+            db.session.commit()
+        except:
+            return False        
     return login(username, password)
 
 def check_csrf():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
+
+def user_count():
+    sql = "SELECT COUNT(*) FROM users"
+    result = db.session.execute(text(sql))
+    return result.fetchone()   
