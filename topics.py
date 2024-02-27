@@ -30,6 +30,8 @@ def send(content):
 
 def edit(topic_id, edited_content):
     user_role = session["user_role"]
+    if user_role != 1:
+        return False
     sql = "UPDATE topics SET content = :edited_content " \
           "WHERE id = :topic_id AND :user_role = 1"
     db.session.execute(text(sql), {"topic_id":topic_id, "edited_content":edited_content, "user_role":user_role})
@@ -38,6 +40,8 @@ def edit(topic_id, edited_content):
 
 def delete(topic_id):
     user_role = session["user_role"]
+    if user_role != 1:
+        return False
     sql = "UPDATE topics SET visible = FALSE WHERE id = :topic_id " \
           "AND :user_role = 1"
     db.session.execute(text(sql), {"topic_id":topic_id, "user_role":user_role})
