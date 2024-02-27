@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, abort, request, redirect, url_for, session
 import login
 import forums
 import threads
@@ -256,6 +256,8 @@ def deletemessage(message_id):
  
 @app.route("/adminpage")
 def adminpage():
+    if session["user_role"] != 1:
+        abort(403)
     #count = topics.get_message_count()
     return render_template("adminpage.html", topics=topics.get_topics())#, count=count)
 
@@ -313,6 +315,8 @@ def deletetopic(topic_id):
 
 @app.route("/topic/<int:topic_id>")
 def topic(topic_id):
+    if session["user_role"] != 1:
+        abort(403)
     return render_template("adminmessages.html", adminmessages=adminmessages.get_messages(topic_id), topic=topics.get_topic(topic_id))
 
 @app.route("/new_adminmessage/<int:topic_id>")
