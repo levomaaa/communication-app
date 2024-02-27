@@ -36,3 +36,12 @@ CREATE TABLE topics (
     user_id INTEGER REFERENCES users (id),
     visible BOOLEAN
 );
+
+CREATE TABLE adminmessages (
+    id SERIAL PRIMARY KEY,
+    content TEXT,
+    user_id INTEGER REFERENCES users (id),
+    topic_id INTEGER REFERENCES topics (id),
+    sent_at TIMESTAMP,
+    visible BOOLEAN
+);

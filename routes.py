@@ -5,6 +5,7 @@ import forums
 import threads
 import messages
 import topics
+import adminmessages
 from datetime import datetime
 
 @app.route("/")
@@ -203,7 +204,7 @@ def send_message(thread_id):
             if messages.send(content,thread_id, forum_id):
                 return redirect(url_for("thread", thread_id=thread_id))
             else:
-                return render_template("error.html", message="Failure creating thread")
+                return render_template("error.html", message="Failure sending message")
         else:
             return render_template("error.html", message="Message is too long")
     else:
@@ -309,4 +310,27 @@ def deletetopic(topic_id):
         return redirect("/adminpage")
     else:
         return render_template("error.html", message="Failure deleting topic")
-   
+
+@app.route("/topic/<int:topic_id>")
+def topic(topic_id):
+    return render_template("adminmessages.html", adminmessages=adminmessages.get_messages(topic_id), topic=topics.get_topic(topic_id))
+
+@app.route("/new_adminmessage/<int:topic_id>")
+def new_adminmessage(topic_id):
+    return render_template("new_adminmessage.html", topic = topics.get_topic(topic_id))
+
+@app.route("/send_adminmessage/<int:topic_id>", methods=["GET", "POST"])
+def send_adminmessage(topic_id):
+    login.check_csrf()
+    content = request.form["adminmessagename"]
+    " ".join(content.split())
+    if len(content)>0 and content.isspace() == False:
+        if len(content)<5001:
+            if adminmessages.send(content,topic_id):
+                return redirect(url_for("topic", topic_id = topic_id))
+            else:
+                return render_template("error.html", message="Failure sending message")
+        else:
+            return render_template("error.html", message="Message is too long")
+    else:
+        return render_template("error.html", message="Message is too short or consists only of spaces")

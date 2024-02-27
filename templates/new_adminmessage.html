@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if session.user_role == 1 %}
+<h2>Send new message</h2>
+
+{% for t in topic %}
+<form action="/send_adminmessage/{{ t[0] }}" method="post">
+Message: <br><input type="text" name="adminmessagename">
+<p>
+<input type="submit" value="Post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+{% endfor %}
+
+<p>
+
+<p>
+{% for t in topic %}
+<a href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
+{% endfor %}
+
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% endif %}
+<p>
+<a href="/">Return to main page</a>
+{% endblock %}
