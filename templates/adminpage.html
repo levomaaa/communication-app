@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if session.user_role == 1 %}
+<h2>Admin page</h2>
+
+<p>
+You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</a>
+<p>
+<a href="/">Return to main page</a>
+    
+<form action="/new_topic">
+    <button class="topicbutton" >Add new topic</button>
+</form>
+
+<hr>
+{% for topic in topics %}
+<a href="/topic/{{ topic[0] }}">To <b>{{ topic[1] }}</b> topic</a>
+<p>
+<i>Topic:</i> {{ topic[1] }}
+<p>
+<i>Creator:</i> {{ topic[2] }}
+<p>
+<input type="hidden" name="topic_id" value="{{ topic[0] }}">
+
+<p>
+<a href="/edit_topic/{{ topic[0] }}">Edit topic</a>
+<a href="/delete_topic/{{ topic[0] }}">Delete topic</a>
+
+<hr>
+{% endfor %}
+
+
+{% endif %}
+
+{% endblock %}

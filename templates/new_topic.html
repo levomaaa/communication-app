@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session.user_role == 1 %}
+<h2>Create new topic</h2>
+
+<form action="/send_topic" method="post">
+Topic name: <br><input type="text" name="topicname">
+<p>
+<input type="submit" value="Post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+<a href="/adminpage">Return to adminpage</a>
+<p>
+{% endif %}
+<a href="/">Return to main page</a>
+
+{% endblock %}

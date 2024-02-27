@@ -29,3 +29,10 @@ CREATE TABLE messages (
     sent_at TIMESTAMP,
     visible BOOLEAN
 );
+
+CREATE TABLE topics (
+    id SERIAL PRIMARY KEY,
+    content TEXT,
+    user_id INTEGER REFERENCES users (id),
+    visible BOOLEAN
+);

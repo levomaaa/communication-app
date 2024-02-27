@@ -4,6 +4,7 @@ import login
 import forums
 import threads
 import messages
+import topics
 from datetime import datetime
 
 @app.route("/")
@@ -254,6 +255,58 @@ def deletemessage(message_id):
  
 @app.route("/adminpage")
 def adminpage():
-    #count = adminthreads.get_message_count()
-    return render_template("adminpage.html")#, threads=adminthreads.get_threads(), count=count)
+    #count = topics.get_message_count()
+    return render_template("adminpage.html", topics=topics.get_topics())#, count=count)
+
+@app.route("/new_topic")
+def new_topic():
+    return render_template("new_topic.html")
+
+@app.route("/send_topic", methods=["POST"])
+def send_topic():
+    login.check_csrf()
+    content = request.form["topicname"]
+    " ".join(content.split())
+    if len(content)>0 and content.isspace() == False:
+        if len(content)<101:
+            if topics.send(content):
+                return redirect("/adminpage")
+            else:
+                return render_template("error.html", message="Failure creating topic")
+        else:
+            return render_template("error.html", message="Topic name is too long")
+    else:
+        return render_template("error.html", message="Topic name is too short or consists only of spaces")
+
+@app.route("/edit_topic/<int:topic_id>")
+def edit_topic_render(topic_id):
+    return render_template("edit_topic.html", topic_id=topic_id, topics=topics.get_topic(topic_id))
+
+@app.route("/edittopic/<int:topic_id>", methods=["GET", "POST"])
+def edittopic(topic_id):
+    login.check_csrf()
+    edited_content = request.form["topicname_edit"]
+    " ".join(edited_content.split())
+    if len(edited_content)>0 and edited_content.isspace() == False:
+        if len(edited_content)<101:
+            if topics.edit(topic_id, edited_content):
+                return redirect("/adminpage")
+            else:
+                return render_template("error.html", message="Failure editing topic")
+        else:
+            return render_template("error.html", message="Topic name is too long")
+    else:
+        return render_template("error.html", message="Topic name is too short or consists only of spaces")
+
+@app.route("/delete_topic/<int:topic_id>")
+def delete_topic_render(topic_id):
+    return render_template("delete_topic.html", topic_id=topic_id, topics=topics.get_topic(topic_id))
+
+@app.route("/deletetopic/<int:topic_id>", methods=["GET", "POST"])
+def deletetopic(topic_id):
+    login.check_csrf()
+    if topics.delete(topic_id):
+        return redirect("/adminpage")
+    else:
+        return render_template("error.html", message="Failure deleting topic")
    
