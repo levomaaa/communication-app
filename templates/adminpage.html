@@ -21,7 +21,7 @@ You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</
 <p>
 <i>Creator:</i> {{ topic[2] }}
 <p>
-<i>Messages:</i> # TODO
+<i>Messages:</i> {{ count[topic[0]] }}
 <input type="hidden" name="topic_id" value="{{ topic[0] }}">
 
 <p>

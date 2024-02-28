@@ -257,8 +257,8 @@ def deletemessage(message_id):
 @app.route("/adminpage")
 def adminpage():
     login.check_role()
-    #count = topics.get_message_count()
-    return render_template("adminpage.html", topics=topics.get_topics())#, count=count)
+    count = adminmessages.get_message_count_of_topics()
+    return render_template("adminpage.html", topics=topics.get_topics(), count=count)
 
 @app.route("/new_topic")
 def new_topic():

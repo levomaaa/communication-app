@@ -17,6 +17,12 @@ def get_topic(topic_id):
     result = db.session.execute(text(sql), {"topic_id":topic_id})
     return result.fetchall()
 
+def get_all_topics():
+    login.check_role()
+    sql = "SELECT MAX(id) FROM topics"
+    result = db.session.execute(text(sql))
+    return result.fetchone()   
+
 def send(content):
     user_id = login.user_id()
     login.check_role()

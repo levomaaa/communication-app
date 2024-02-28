@@ -4,8 +4,7 @@ from db import db
 import os
 from sqlalchemy.sql import text
 import login
-import forums
-import threads
+import topics
 
 def get_messages(topic_id):
     login.check_role()
@@ -59,3 +58,24 @@ def get_topic_id(message_id):
           "WHERE id = :message_id"
     result = db.session.execute(text(sql), {"message_id":message_id})
     return result.fetchone()
+
+def get_message_count():
+    login.check_role() 
+    sql = "SELECT id, topic_id FROM adminmessages " \
+          "WHERE visible = TRUE"
+    result = db.session.execute(text(sql))
+    return result.fetchall()
+
+def get_message_count_of_topics():
+    login.check_role() 
+    list = get_message_count()
+    topic_count = topics.get_all_topics()
+    if topic_count[0] == None:
+        count_variable = 0
+    else:
+        count_variable = topic_count[0]
+    count = [0] * (count_variable + 1)
+    for i in list:
+        t = i[1]
+        count[t] += 1
+    return count
