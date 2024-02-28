@@ -54,7 +54,7 @@ def get_thread_count_of_forum():
 
 def send(content, forum_id):
     user_id = login.user_id()
-    if user_id == 0:
+    if user_id == -1:
         return False
     sql = "INSERT INTO threads (content, user_id, forum_id, visible) " \
           "VALUES (:content, :user_id, :forum_id, TRUE)"

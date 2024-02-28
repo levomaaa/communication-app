@@ -31,7 +31,12 @@ def logout():
     return redirect("/")
 
 def user_id():
-    return session.get("user_id", 0)
+    return session.get("user_id", -1)
+
+def check_role():
+    user_role = session["user_role"]
+    if user_role != 1:
+        abort(403)
 
 def register(username, password):
     hash_value = generate_password_hash(password)

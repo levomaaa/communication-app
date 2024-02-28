@@ -256,17 +256,18 @@ def deletemessage(message_id):
  
 @app.route("/adminpage")
 def adminpage():
-    if session["user_role"] != 1:
-        abort(403)
+    login.check_role()
     #count = topics.get_message_count()
     return render_template("adminpage.html", topics=topics.get_topics())#, count=count)
 
 @app.route("/new_topic")
 def new_topic():
+    login.check_role()
     return render_template("new_topic.html")
 
 @app.route("/send_topic", methods=["POST"])
 def send_topic():
+    login.check_role()
     login.check_csrf()
     content = request.form["topicname"]
     " ".join(content.split())
@@ -283,10 +284,12 @@ def send_topic():
 
 @app.route("/edit_topic/<int:topic_id>")
 def edit_topic_render(topic_id):
+    login.check_role()
     return render_template("edit_topic.html", topic_id=topic_id, topics=topics.get_topic(topic_id))
 
 @app.route("/edittopic/<int:topic_id>", methods=["GET", "POST"])
 def edittopic(topic_id):
+    login.check_role()
     login.check_csrf()
     edited_content = request.form["topicname_edit"]
     " ".join(edited_content.split())
@@ -303,10 +306,12 @@ def edittopic(topic_id):
 
 @app.route("/delete_topic/<int:topic_id>")
 def delete_topic_render(topic_id):
+    login.check_role()
     return render_template("delete_topic.html", topic_id=topic_id, topics=topics.get_topic(topic_id))
 
 @app.route("/deletetopic/<int:topic_id>", methods=["GET", "POST"])
 def deletetopic(topic_id):
+    login.check_role()
     login.check_csrf()
     if topics.delete(topic_id):
         return redirect("/adminpage")
@@ -315,16 +320,17 @@ def deletetopic(topic_id):
 
 @app.route("/topic/<int:topic_id>")
 def topic(topic_id):
-    if session["user_role"] != 1:
-        abort(403)
+    login.check_role()
     return render_template("adminmessages.html", adminmessages=adminmessages.get_messages(topic_id), topic=topics.get_topic(topic_id))
 
 @app.route("/new_adminmessage/<int:topic_id>")
 def new_adminmessage(topic_id):
+    login.check_role()
     return render_template("new_adminmessage.html", topic = topics.get_topic(topic_id))
 
 @app.route("/send_adminmessage/<int:topic_id>", methods=["GET", "POST"])
 def send_adminmessage(topic_id):
+    login.check_role()
     login.check_csrf()
     content = request.form["adminmessagename"]
     " ".join(content.split())
@@ -334,6 +340,32 @@ def send_adminmessage(topic_id):
                 return redirect(url_for("topic", topic_id = topic_id))
             else:
                 return render_template("error.html", message="Failure sending message")
+        else:
+            return render_template("error.html", message="Message is too long")
+    else:
+        return render_template("error.html", message="Message is too short or consists only of spaces")
+
+@app.route("/edit_adminmessage/<int:adminmessage_id>")
+def edit_adminmessage_render(adminmessage_id):
+    login.check_role()
+    topic_id = adminmessages.get_topic_id(adminmessage_id)
+    topic_id = topic_id[0]
+    return render_template("edit_adminmessage.html", adminmessage_id=adminmessage_id, message=adminmessages.get_message(adminmessage_id), topic=topics.get_topic(topic_id))
+
+@app.route("/editadminmessage/<int:adminmessage_id>", methods=["GET", "POST"])
+def editadminmessage(adminmessage_id):
+    login.check_role()
+    login.check_csrf()
+    topic_id = adminmessages.get_topic_id(adminmessage_id)
+    topic_id = topic_id[0]
+    edited_content = request.form["adminmessagename_edit"]
+    " ".join(edited_content.split())
+    if len(edited_content)>0 and edited_content.isspace() == False:
+        if len(edited_content)<5001:
+            if adminmessages.edit(adminmessage_id,edited_content):
+                return redirect(url_for("topic", topic_id=topic_id))
+            else:
+                return render_template("error.html", message="Failure editing message")
         else:
             return render_template("error.html", message="Message is too long")
     else:

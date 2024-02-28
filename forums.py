@@ -25,7 +25,7 @@ def get_all_forums():
 
 def send(content):
     user_id = login.user_id()
-    if user_id == 0:
+    if user_id == -1:
         return False
     sql = "INSERT INTO forums (content, user_id, visible) " \
           "VALUES (:content, :user_id, TRUE)"

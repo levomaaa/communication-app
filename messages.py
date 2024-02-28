@@ -25,7 +25,7 @@ def get_message(message_id):
 
 def send(content, thread_id, forum_id):
     user_id = login.user_id()
-    if user_id == 0:
+    if user_id == -1:
         return False
     sql = "INSERT INTO messages (content, user_id, thread_id, forum_id, sent_at, visible) " \
           "VALUES (:content, :user_id, :thread_id, :forum_id, NOW(), TRUE)"
