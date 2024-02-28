@@ -44,6 +44,15 @@ def edit(message_id, edited_content):
     db.session.commit()
     return True
 
+def delete(message_id):
+    login.check_role()
+    user_role = session["user_role"]
+    sql = "UPDATE adminmessages SET visible = FALSE WHERE id = :message_id " \
+          "AND :user_role = 1"
+    db.session.execute(text(sql), {"message_id":message_id, "user_role":user_role})
+    db.session.commit()
+    return True
+
 def get_topic_id(message_id):
     login.check_role() 
     sql = "SELECT topic_id FROM adminmessages " \

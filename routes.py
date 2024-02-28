@@ -370,3 +370,22 @@ def editadminmessage(adminmessage_id):
             return render_template("error.html", message="Message is too long")
     else:
         return render_template("error.html", message="Message is too short or consists only of spaces")
+
+@app.route("/delete_adminmessage/<int:adminmessage_id>")
+def delete_adminmessage_render(adminmessage_id):
+    login.check_role()
+    topic_id = adminmessages.get_topic_id(adminmessage_id)
+    topic_id = topic_id[0]
+    return render_template("delete_adminmessage.html", adminmessage_id=adminmessage_id, message=adminmessages.get_message(adminmessage_id), topic=topics.get_topic(topic_id))
+
+@app.route("/deleteadminmessage/<int:adminmessage_id>", methods=["GET", "POST"])
+def deleteadminmessage(adminmessage_id):
+    login.check_role()
+    login.check_csrf()
+    topic_id = adminmessages.get_topic_id(adminmessage_id)
+    topic_id = topic_id[0]
+    if adminmessages.delete(adminmessage_id):
+        return redirect(url_for("topic", topic_id = topic_id))
+    else:
+        return render_template("error.html", message="Failure deleting message")
+ 

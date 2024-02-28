@@ -16,6 +16,8 @@ Message: <br><input type="text" name="adminmessagename_edit" value="{{ msg[1] }}
 {% endfor %}
 </form>
 <p>
+<a href="/adminpage">Return to adminpage</a>
+<p>
 {% for t in topic %}
 <a href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
 {% endfor %}
