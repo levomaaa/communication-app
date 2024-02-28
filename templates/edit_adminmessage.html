@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if session.user_role == 1 %}
+
+{% for msg in message %}
+
+<input type="hidden" name="adminmessage_id" value="{{ msg[0] }}">
+<h2>Edit message</h2>
+<form action="/editadminmessage/{{ msg[0] }}" method="post">
+Message: <br><input type="text" name="adminmessagename_edit" value="{{ msg[1] }}">
+
+<p>
+<input type="submit" value="Post">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+{% endfor %}
+</form>
+<p>
+{% for t in topic %}
+<a href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
+{% endfor %}
+{% endif %}
+<p>
+<a href="/">Return to main page</a>
+
+{% endblock %}
