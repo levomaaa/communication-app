@@ -51,3 +51,17 @@ def delete(topic_id):
     db.session.execute(text(sql), {"topic_id":topic_id, "user_role":user_role})
     db.session.commit()
     return True
+
+def if_exists(name):
+    login.check_role()
+    sql = "SELECT content FROM topics WHERE content = :name " \
+          "AND visible = TRUE"
+    result = db.session.execute(text(sql), {"name":name})
+    result = result.fetchone()
+    if_exists = result
+    variable = [""]
+    if if_exists == None:
+        variable[0] = ""
+    else:
+        variable[0] = if_exists[0]
+    return variable[0]

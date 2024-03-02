@@ -288,6 +288,11 @@ def send_topic():
     login.check_role()
     login.check_csrf()
     content = request.form["topicname"]
+    if len(content) == 0:
+        return render_template("error.html", message="Topic name can't be empty")
+    if topics.if_exists(content) == content:
+        return render_template("error.html", message="Topic already exists")
+
     " ".join(content.split())
     if len(content)>0 and content.isspace() == False:
         if len(content)<101:
@@ -310,6 +315,11 @@ def edittopic(topic_id):
     login.check_role()
     login.check_csrf()
     edited_content = request.form["topicname_edit"]
+    if len(edited_content) == 0:
+        return render_template("error.html", message="Topic name can't be empty")
+    if topics.if_exists(edited_content) == edited_content:
+        return render_template("error.html", message="Topic already exists")
+ 
     " ".join(edited_content.split())
     if len(edited_content)>0 and edited_content.isspace() == False:
         if len(edited_content)<101:
