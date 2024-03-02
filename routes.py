@@ -67,6 +67,10 @@ def new():
 def send():
     login.check_csrf()
     content = request.form["forumname"]
+    if len(content) == 0:
+        return render_template("error.html", message="Forum name can't be empty")
+    if forums.if_exists(content) == content:
+        return render_template("error.html", message="Forum already exists")
     " ".join(content.split())
     if len(content)>0 and content.isspace() == False:
         if len(content)<101:
@@ -87,6 +91,11 @@ def edit_forum_render(forum_id):
 def editforum(forum_id):
     login.check_csrf()
     edited_content = request.form["forumname_edit"]
+    if len(edited_content) == 0:
+        return render_template("error.html", message="Forum name can't be empty")
+    if forums.if_exists(edited_content) == edited_content:
+        return render_template("error.html", message="Forum already exists")
+ 
     " ".join(edited_content.split())
     if len(edited_content)>0 and edited_content.isspace() == False:
         if len(edited_content)<101:
