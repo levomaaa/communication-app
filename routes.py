@@ -130,6 +130,11 @@ def forum(forum_id):
 def send_thread(forum_id):
     login.check_csrf()
     content = request.form["threadname"]
+    if len(content) == 0:
+        return render_template("error.html", message="Thread name can't be empty")
+    if threads.if_exists(content, forum_id) == content:
+        return render_template("error.html", message="Thread already exists")
+
     " ".join(content.split())
     if len(content)>0 and content.isspace() == False:
         if len(content)<101:
@@ -159,6 +164,11 @@ def editthread(thread_id):
     forum_id = threads.get_forum_id(thread_id)
     forum_id = forum_id[0]
     edited_content = request.form["threadname_edit"]
+    if len(edited_content) == 0:
+        return render_template("error.html", message="Thread name can't be empty")
+    if threads.if_exists(edited_content, forum_id) == edited_content:
+        return render_template("error.html", message="Thread already exists")
+ 
     " ".join(edited_content.split())
     if len(edited_content)>0 and edited_content.isspace() == False:
         if len(edited_content)<101:

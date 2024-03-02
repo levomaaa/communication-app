@@ -79,3 +79,16 @@ def delete(thread_id):
     db.session.execute(text(sql), {"thread_id":thread_id, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True
+
+def if_exists(name, forum_id):
+    sql = "SELECT content FROM threads WHERE content = :name " \
+          "AND visible = TRUE AND forum_id = :forum_id"
+    result = db.session.execute(text(sql), {"name":name, "forum_id":forum_id})
+    result = result.fetchone()
+    if_exists = result
+    variable = [""]
+    if if_exists == None:
+        variable[0] = ""
+    else:
+        variable[0] = if_exists[0]
+    return variable[0]
