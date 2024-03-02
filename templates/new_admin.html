@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if session.user_role == 1 %}
+<h2>Make user as admin</h2>
+
+Current admins:
+<ul>
+    {% for admin in admins %}
+    <li>{{ admin[0] }}</li>
+    {% endfor %}
+</ul>
+<p>
+
+<form action="/make_admin" method="post">
+Select user to make them as admin: 
+<select name="adminid">
+    {% for user in users %}
+    <option name="adminid2" value="{{ user[0] }}">{{ user[1] }}</option>
+    {% endfor %}
+</select>
+
+<p>
+<input type="submit" value="Submit">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+<a href="/adminpage">Return to adminpage</a>
+{% endif %}
+<p>
+<a href="/">Return to main page</a>
+{% endblock %}

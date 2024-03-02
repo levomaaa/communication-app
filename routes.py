@@ -6,7 +6,6 @@ import threads
 import messages
 import topics
 import adminmessages
-from datetime import datetime
 
 @app.route("/")
 def index():
@@ -388,4 +387,18 @@ def deleteadminmessage(adminmessage_id):
         return redirect(url_for("topic", topic_id = topic_id))
     else:
         return render_template("error.html", message="Failure deleting message")
- 
+
+@app.route("/new_admin")
+def new_admin():
+    login.check_role()
+    return render_template("new_admin.html", users=login.get_users(), admins=login.get_admins())
+
+@app.route("/make_admin", methods=["GET", "POST"])
+def make_admin():
+    login.check_role()
+    login.check_csrf()
+    id = request.form["adminid"]
+    if login.make_admin(id):
+        return redirect("/adminpage")
+    else:
+        return render_template("error.html", message="Failure making admin")

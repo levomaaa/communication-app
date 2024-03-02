@@ -64,3 +64,20 @@ def user_count():
     sql = "SELECT COUNT(*) FROM users"
     result = db.session.execute(text(sql))
     return result.fetchone()   
+
+def get_users():
+    sql = "SELECT id, name FROM users WHERE role IS NULL"
+    result = db.session.execute(text(sql))
+    return result.fetchall() 
+
+def get_admins():
+    sql = "SELECT name FROM users WHERE role = 1"
+    result = db.session.execute(text(sql))
+    return result.fetchall() 
+
+def make_admin(id):
+    sql = "UPDATE users SET role = 1 " \
+          "WHERE id = :id"
+    db.session.execute(text(sql), {"id":id})
+    db.session.commit()
+    return True
