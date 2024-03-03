@@ -38,7 +38,7 @@ def check_role():
 
 def register(username, password):
     hash_value = generate_password_hash(password)
-    if user_count() is not None:
+    if user_count() == "1":
         try:
             sql = "INSERT INTO users (name, password) VALUES (:username, :password)"
             db.session.execute(text(sql), {"username":username, "password":hash_value})
@@ -60,9 +60,16 @@ def check_csrf():
         abort(403)
 
 def user_count():
-    sql = "SELECT COUNT(*) FROM users"
+    sql = "SELECT * FROM users"
     result = db.session.execute(text(sql))
-    return result.fetchone()   
+    result = result.fetchone()
+    if_exists = result
+    variable = [""]
+    if if_exists is None:
+        variable[0] = "0"
+    else:
+        variable[0] = "1"
+    return variable[0]
 
 def get_users():
     sql = "SELECT id, name FROM users WHERE role IS NULL"
