@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<div class="pageheader">
 <h2>Send new message</h2>
+</div>
 {% for t in thread %}
 <form action="/send_message/{{ t[0] }}" method="post">
 Message: <br><input type="text" name="messagename">
@@ -12,14 +13,14 @@ Message: <br><input type="text" name="messagename">
 {% endfor %}
 
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 <p>
 {% for f in forum %}
-<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
+<a class="hyperlink" href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
 {% endfor %}
 <p>
 {% for t in thread %}
-<a href="/thread/{{ t[0] }}">Return to <b>{{ t[1] }}</b> thread</a>
+<a class="hyperlink" href="/thread/{{ t[0] }}">Return to <b>{{ t[1] }}</b> thread</a>
 {% endfor %}
 
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

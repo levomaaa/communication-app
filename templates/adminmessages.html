@@ -4,23 +4,27 @@
 {% if session.user_role == 1 %}
 
 {% for t in topic %}
+<div class="pageheader">
 <h2>{{ t[1] }}</h2>
+</div>
 <p>
+<div class="session">
 You are logged in as <b>{{ session.user_name }}</b>.
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 <p>
-<a href="/adminpage">Return to adminpage</a>
+<a class="hyperlink" href="/adminpage">Return to adminpage</a>
 <p>
 
-<form action="/new_adminmessage/{{ t[0] }}">
+
+<form class="button" action="/new_adminmessage/{{ t[0] }}">
     <button class="adminmessagebutton" >Add new message</button>
 </form>
+</div>
 {% endfor %}
 
-<hr>
 {% for message in adminmessages %}
-<p>
+<div class="box">
 <i>Message:</i> <b>{{ message[1] }}</b>
 <p>
 <i>Creator:</i> {{ message[2] }}
@@ -28,11 +32,10 @@ You are logged in as <b>{{ session.user_name }}</b>.
 <i>Time:</i> {{ message[3].strftime("%Y-%m-%d %H:%M:%S") }}
 <p>
 <input type="hidden" name="adminmessage_id" value="{{ message[0] }}">
-<a href="/edit_adminmessage/{{ message[0] }}">Edit message</a>
-<a href="/delete_adminmessage/{{ message[0] }}">Delete message</a>
+<a class="hyperlink" href="/edit_adminmessage/{{ message[0] }}">Edit message</a>
+<a class="hyperlink" href="/delete_adminmessage/{{ message[0] }}">Delete message</a>
+</div>
 
-
-<hr>
 {% endfor %}
 {% endif %}
 

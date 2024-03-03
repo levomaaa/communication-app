@@ -5,18 +5,20 @@
 {% if session.user_role == 1 %}
 
 <input type="hidden" name="topic_id" value="{{ topic[0] }}">
+<div class="pageheader">
 <h2>Edit topic</h2>
+</div>
 <form action="/edittopic/{{ topic[0] }}" method="post">
 Topic name: <br><input type="text" name="topicname_edit" value="{{ topic[1] }}">
 <p>
 <input type="submit" value="Post">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <p>
-<a href="/adminpage">Return to adminpage</a>
+<a class="hyperlink" href="/adminpage">Return to adminpage</a>
 {% endif %}
 {% endfor %}
 </form>
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 {% endblock %}

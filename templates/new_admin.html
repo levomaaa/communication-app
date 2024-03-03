@@ -2,8 +2,9 @@
 {% block content %}
 
 {% if session.user_role == 1 %}
+<div class="pageheader">
 <h2>Make user as admin</h2>
-
+</div>
 Current admins:
 <ul>
     {% for admin in admins %}
@@ -25,8 +26,8 @@ Select user to make them as admin:
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <p>
-<a href="/adminpage">Return to adminpage</a>
+<a class="hyperlink" href="/adminpage">Return to adminpage</a>
 {% endif %}
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 {% endblock %}

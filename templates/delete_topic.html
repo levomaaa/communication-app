@@ -5,6 +5,9 @@
 
 <input type="hidden" name="topic_id" value="{{ topic[0] }}">
 {% if session.user_role == 1 %}
+<div class="pageheader">
+<h2>Delete topic</h2>
+</div>
 <p>Are you sure you want to delete the <b>{{ topic[1] }}</b> topic?</p>
 <form action="/deletetopic/{{ topic[0] }}" method="post">
 
@@ -12,12 +15,12 @@
 <input type="submit" value="Yes">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <p>
-<a href="/adminpage">Return to adminpage</a>
+<a class="hyperlink" href="/adminpage">Return to adminpage</a>
 {% endif %}
 {% endfor %}
 </form>
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 
 {% endblock %}

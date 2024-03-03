@@ -2,23 +2,27 @@
 {% block content %}
 
 {% for f in forum %}
+<div class="pageheader">
 <h2>{{ f[1] }}</h2>
+</div>
 <p>
+<div class="session">
 You are logged in as <b>{{ session.user_name }}</b>.
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 
 
-<form action="/new_thread/{{ f[0] }}">
+<form class="button" action="/new_thread/{{ f[0] }}">
     <button class="threadbutton" >Add new thread</button>
 </form>
 {% endfor %}
 
-
+</div>
 <hr>
 {% for thread in threads %}
-<a href="/thread/{{ thread[0] }}">To <b>{{ thread[1] }}</b> thread</a>
+<div class="box">
+<a class="hyperlink" href="/thread/{{ thread[0] }}">To <b>{{ thread[1] }}</b> thread</a>
 <p>
 <i>Thread:</i> {{ thread[1] }}
 <p>
@@ -30,11 +34,11 @@ You are logged in as <b>{{ session.user_name }}</b>.
 <p>
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
 {% if session.user_name == thread[2] or session.user_role == 1 %}
-<a href="/edit_thread/{{ thread[0] }}">Edit thread</a>
-<a href="/delete_thread/{{ thread[0] }}">Delete thread</a>
+<a class="hyperlink" href="/edit_thread/{{ thread[0] }}">Edit thread</a>
+<a class="hyperlink" href="/delete_thread/{{ thread[0] }}">Delete thread</a>
 
 {% endif %}
-<hr>
+</div>
 {% endfor %}
 
 

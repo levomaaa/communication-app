@@ -1,22 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<div class="pageheader">
 <h2>Main page</h2>
-
+</div>
 {% if session.user_role == 1 %}
-<a href="/adminpage">To <b>Adminpage</b></a>
+<div class="session">
+<a class="hyperlink" href="/adminpage">To <b>Adminpage</b></a>
 {% endif %}
 <p>
 {% if session.user_id %}
-You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</a>
 
-<form action="/new_forum">
+You are logged in as <b>{{ session.user_name }}</b>. <a class="hyperlink" href="/logout">Log out</a>
+
+<form class="button" action="/new_forum">
     <button class="forumbutton" >Add new forum</button>
 </form>
-
+</div>
 <hr>
+
 {% for forum in forums %}
-<a href="/forum/{{ forum[0] }}">To <b>{{ forum[1] }}</b> forum</a>
+<div class="box">
+<a class="hyperlink" href="/forum/{{ forum[0] }}">To <b>{{ forum[1] }}</b> forum</a>
 <p>
 <i>Forum:</i> {{ forum[1] }}
 <p>
@@ -27,15 +31,16 @@ You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</
 <p>
 
 {% if session.user_name == forum[2] or session.user_role == 1 %}
-<a href="/edit_forum/{{ forum[0] }}">Edit forum</a>
-<a href="/delete_forum/{{ forum[0] }}">Delete forum</a>
+<a class="hyperlink" href="/edit_forum/{{ forum[0] }}">Edit forum</a>
+<a class="hyperlink" href="/delete_forum/{{ forum[0] }}">Delete forum</a>
 
 {% endif %}
 <hr>
+</div>
 {% endfor %}
 
 {% else %}
-You are not logged in. <a href="/login">Log in</a>
+You are not logged in. <a class="hyperlink" href="/login">Log in</a>
 {% endif %}
 
 {% endblock %}

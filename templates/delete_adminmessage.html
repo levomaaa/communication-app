@@ -4,7 +4,9 @@
 {% for msg in message %}
 
 <input type="hidden" name="adminmessage_id" value="{{ msg[0] }}">
-
+<div class="pageheader">
+<h2>Delete message</h2>
+</div>
 <p>Are you sure you want to delete the following message:
 <p>
 <b>{{ msg[1] }}</b>
@@ -17,13 +19,13 @@
 {% endfor %}
 </form>
 <p>
-<a href="/adminpage">Return to adminpage</a>
+<a class="hyperlink" href="/adminpage">Return to adminpage</a>
 <p>
 {% for t in topic %}
-<a href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
+<a class="hyperlink" href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
 {% endfor %}
 {% endif %}
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 {% endblock %}

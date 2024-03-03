@@ -2,26 +2,32 @@
 {% block content %}
 
 {% for t in thread %}
+
+<div class="pageheader">
 <h2>{{ t[1] }}</h2>
+</div>
 <p>
+<div class="session">
 You are logged in as <b>{{ session.user_name }}</b>.
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 <p>
 {% for f in forum %}
-<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
+<a class="hyperlink" href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
 {% endfor %}
 
 
-<form action="/new_message/{{ t[0] }}">
+<form class="button" action="/new_message/{{ t[0] }}">
     <button class="messagebutton" >Add new message</button>
 </form>
+</div>
 {% endfor %}
 
 
 
 <hr>
 {% for message in messages %}
+<div class="box">
 <p>
 <i>Message:</i> <b>{{ message[1] }}</b>
 <p>
@@ -31,11 +37,12 @@ You are logged in as <b>{{ session.user_name }}</b>.
 <p>
 <input type="hidden" name="message_id" value="{{ message[0] }}">
 {% if session.user_name == message[2] or session.user_role == 1 %}
-<a href="/edit_message/{{ message[0] }}">Edit message</a>
-<a href="/delete_message/{{ message[0] }}">Delete message</a>
+<a class="hyperlink" href="/edit_message/{{ message[0] }}">Edit message</a>
+<a class="hyperlink" href="/delete_message/{{ message[0] }}">Delete message</a>
 
 {% endif %}
 <hr>
+</div>
 {% endfor %}
 
 

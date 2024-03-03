@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<div class="pageheader">
 <h2>Log in</h2>
+</div>
 
 <form action="/login" method="post">
 Username: <br><input type="text" name="username">
@@ -13,6 +15,6 @@ Password: <br><input type="password" name="password">
 If you don't have an account, please register from <a href="/register">here</a>.
 
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 {% endblock %}

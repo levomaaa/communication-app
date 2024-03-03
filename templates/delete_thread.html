@@ -5,6 +5,9 @@
 
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
 {% if session.user_id == thread[2] or session.user_role == 1 %}
+<div class="pageheader">
+<h2>Delete thread</h2>
+</div>
 <p>Are you sure you want to delete the <b>{{ thread[1] }}</b> thread?</p>
 <form action="/deletethread/{{ thread[0] }}" method="post">
 
@@ -15,10 +18,10 @@
 {% endfor %}
 </form>
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 <p>
 {% for f in forum %}
-<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
+<a class="hyperlink" href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
 {% endfor %}
 
 {% endblock %}

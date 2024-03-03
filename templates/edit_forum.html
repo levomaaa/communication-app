@@ -4,7 +4,9 @@
 {% for forum in forums %}
 <input type="hidden" name="forum_id" value="{{ forum[0] }}">
 {% if session.user_id == forum[2] or session.user_role == 1 %}
+<div class="pageheader">
 <h2>Edit forum</h2>
+</div>
 <form action="/editforum/{{ forum[0] }}" method="post">
 Forum name: <br><input type="text" name="forumname_edit" value="{{ forum[1] }}">
 
@@ -17,6 +19,6 @@ Forum name: <br><input type="text" name="forumname_edit" value="{{ forum[1] }}">
 <p>
 
 
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 {% endblock %}

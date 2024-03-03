@@ -6,7 +6,9 @@
 {% for msg in message %}
 
 <input type="hidden" name="adminmessage_id" value="{{ msg[0] }}">
+<div class="pageheader">
 <h2>Edit message</h2>
+</div>
 <form action="/editadminmessage/{{ msg[0] }}" method="post">
 Message: <br><input type="text" name="adminmessagename_edit" value="{{ msg[1] }}">
 
@@ -16,13 +18,13 @@ Message: <br><input type="text" name="adminmessagename_edit" value="{{ msg[1] }}
 {% endfor %}
 </form>
 <p>
-<a href="/adminpage">Return to adminpage</a>
+<a class="hyperlink" href="/adminpage">Return to adminpage</a>
 <p>
 {% for t in topic %}
-<a href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
+<a class="hyperlink" href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
 {% endfor %}
 {% endif %}
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 {% endblock %}

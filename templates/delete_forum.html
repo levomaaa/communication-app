@@ -5,6 +5,9 @@
 
 <input type="hidden" name="forum_id" value="{{ forum[0] }}">
 {% if session.user_id == forum[2] or session.user_role == 1 %}
+<div class="pageheader">
+<h2>Delete forum</h2>
+</div>
 <p>Are you sure you want to delete the <b>{{ forum[1] }}</b> forum?</p>
 <form action="/deleteforum/{{ forum[0] }}" method="post">
 <p>
@@ -15,6 +18,6 @@
 </form>
 <p>
 
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 {% endblock %}

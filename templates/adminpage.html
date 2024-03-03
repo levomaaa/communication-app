@@ -2,24 +2,27 @@
 {% block content %}
 
 {% if session.user_role == 1 %}
+<div class="header">
 <h2>Admin page</h2>
-
+</div>
 <p>
+<div class="session">
 You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</a>
 <p>
-<a href="/">Return to main page</a>
-    
-<form action="/new_topic">
+<a class="hyperlink" href="/">Return to main page</a>
+</div>    
+<form class="button" action="/new_topic">
     <button class="topicbutton" >Add new topic</button>
 </form>
 <p>
-<form action="/new_admin">
+<form class="button" action="/new_admin">
     <button class="adminbutton" >Make user as admin</button>
 </form>
 
 <hr>
 {% for topic in topics %}
-<a href="/topic/{{ topic[0] }}">To <b>{{ topic[1] }}</b> topic</a>
+<div class="box">
+<a class="hyperlink" href="/topic/{{ topic[0] }}">To <b>{{ topic[1] }}</b> topic</a>
 <p>
 <i>Topic:</i> {{ topic[1] }}
 <p>
@@ -29,10 +32,9 @@ You are logged in as <b>{{ session.user_name }}</b>. <a href="/logout">Log out</
 <input type="hidden" name="topic_id" value="{{ topic[0] }}">
 
 <p>
-<a href="/edit_topic/{{ topic[0] }}">Edit topic</a>
-<a href="/delete_topic/{{ topic[0] }}">Delete topic</a>
-
-<hr>
+<a class="hyperlink" href="/edit_topic/{{ topic[0] }}">Edit topic</a>
+<a class="hyperlink" href="/delete_topic/{{ topic[0] }}">Delete topic</a>
+</div>
 {% endfor %}
 
 

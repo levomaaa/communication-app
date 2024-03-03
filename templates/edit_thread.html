@@ -5,7 +5,9 @@
 
 <input type="hidden" name="thread_id" value="{{ thread[0] }}">
 {% if session.user_id == thread[2] or session.user_role == 1 %}
+<div class="pageheader">
 <h2>Edit thread</h2>
+</div>
 <form action="/editthread/{{ thread[0] }}" method="post">
 Thread name: <br><input type="text" name="threadname_edit" value="{{ thread[1] }}">
 
@@ -19,10 +21,10 @@ Thread name: <br><input type="text" name="threadname_edit" value="{{ thread[1] }
 
 
 
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 <p>
 {% for f in forum %}
-<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
+<a class="hyperlink" href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
 {% endfor %}
 
 

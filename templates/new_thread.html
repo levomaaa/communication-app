@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<div class="pageheader">
 <h2>Create new thread</h2>
+</div>
 {% for f in forum %}
 <form action="/send_thread/{{ f[0] }}" method="post">
 Thread name: <br><input type="text" name="threadname">
@@ -12,10 +13,10 @@ Thread name: <br><input type="text" name="threadname">
 {% endfor %}
 
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 <p>
 {% for f in forum %}
-<a href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
+<a class="hyperlink" href="/forum/{{ f[0] }}">Return to <b>{{ f[1] }}</b> forum</a>
 {% endfor %}
 
 {% endblock %}

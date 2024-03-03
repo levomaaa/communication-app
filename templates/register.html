@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<div class="pageheader">
 <h2>Register</h2>
-
+</div>
 <form action="/register" method="post">
     Username: <input type="text" name="username">
     <p>
@@ -13,6 +13,6 @@
     <input type="submit" value="Create user">
 </form>
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 
 {% endblock %}

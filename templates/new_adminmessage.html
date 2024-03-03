@@ -2,8 +2,9 @@
 {% block content %}
 
 {% if session.user_role == 1 %}
+<div class="pageheader">
 <h2>Send new message</h2>
-
+</div>
 {% for t in topic %}
 <form action="/send_adminmessage/{{ t[0] }}" method="post">
 Message: <br><input type="text" name="adminmessagename">
@@ -14,14 +15,14 @@ Message: <br><input type="text" name="adminmessagename">
 {% endfor %}
 
 <p>
-<a href="/adminpage">Return to adminpage</a>
+<a class="hyperlink" href="/adminpage">Return to adminpage</a>
 <p>
 {% for t in topic %}
-<a href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
+<a class="hyperlink" href="/topic/{{ t[0] }}">Return to <b>{{ t[1] }}</b> topic</a>
 {% endfor %}
 
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 {% endif %}
 <p>
-<a href="/">Return to main page</a>
+<a class="hyperlink" href="/">Return to main page</a>
 {% endblock %}

@@ -2,10 +2,61 @@ body {
     margin: auto;
     max-width: 45em;
     font-family: 'Helvetica', 'Arial', sans-serif;
-    background-color: #8affb5;
+    background-color: #c3c3c3;
 }
 
-.forumbutton {
-    margin-top: 20px;
+.header {
+    background: rgb(96, 121, 244);
+    font-weight: bold;
+    padding: 1em 1em;
+    font-size: 2em;
+    text-align: center;
+    border-radius: .5em;
+}
+
+.pageheader {
+    background: rgb(96, 121, 244);
+    font-weight: bold;
+    padding: 0.6em 0.6em;
+    font-size: 1.5em;
+    text-align: center;
     margin-bottom: 10px;
+    border-radius: .5em;
+}
+
+.hyperlink {
+    background: rgb(255, 255, 255);
+    padding: 0.5em 0.5em;   
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: .5em;
+    text-decoration: none;
+}
+
+.box {
+    background: rgb(243, 99, 67);
+    padding: 1em;
+    width: fit-content;
+    border-radius: .5em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.session {
+    background-color: #8affb5;
+    padding: 1em;
+    width: fit-content;
+    border-radius: .5em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.button {
+    background: rgb(0, 0, 0);
+    padding: 0.5em 0.5em;   
+    margin-top: 10px;
+    border-radius: .5em;
+    text-decoration: none;
+    width: fit-content;
 }
