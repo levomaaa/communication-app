@@ -5,32 +5,17 @@ The application shows discussion forums, each of which has a specific topic. The
 ## Features of the application:
 
 * User can log in and out and create a new account.
-* On the front page of the app, the user sees a list of discussion forums, the number of threads and messages in each forum, and the date of the last message sent.
-* The user can create a new chain in the area by entering the title of the chain.
-* The user can write a new message in an existing chain.
-* The user can edit the title of the chain he/she has created, as well as the content of the message he/she has sent. The user can also delete the chain or message.
-* The user can search for all messages that are part of a given word.
+* On the front page of the app, the user sees a list of discussion forums, the number of threads in each forum and the name of the forum creator.
+* On the thread page, the user can see the number of messages in each thread, the creator, and the date of the last message sent.
+* The user can create new forums, threads and messages.
+* The user can write make a new thread to an existing forum and a new message in an existing thread.
+* The user can edit the title of the (forum, thread) he/she has created, as well as the content of the message he/she has sent. The user can also delete the (forum, thread) or message he/she has created.
 * The administrator can add and remove forums, threads and messages.
-* The administrators can communicate with eachother in their own administrators chat which only they can see.
-* The administrator can retrieve deleted forums, threads and messages.
+* The administrators can communicate with other administrators in their own administrators page which only they can see.
+* The administrators page has topics and messages in them.
+* The administrator can make other users as administrators.
 
-### If I have extra time:
-
-* The administrator can delete users.
-* Users can see how many messages they have sent.
-
-## Present situation:
-
-* User can log in and out and create a new account.
-* The username is unique and no one can have the same as you.
-* Username and password can't be empty.
-* The user sees forums while logged in. You can't see them if you aren't logged in.
-* Users can create new forums and see who has created the already existing ones and how many threads the forum contains.
-* Users can create new threads and see who has created the already existing ones and how many messages the thread contains. Also the date of the last message is shown.
-* Users can send messages and see by who and when were the existing messages created.
-* Users can edit and delete forums, threads and messages if he/she has created them.
-* The layout has been modified to be prettier and more practical.
-* For now, the product can only be tested locally, but hopefully also online in the future.
+* The product can only be tested locally.
 
 ## Startup instructions:
 
