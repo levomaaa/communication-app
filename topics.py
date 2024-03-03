@@ -1,4 +1,4 @@
-from flask import session, abort
+from flask import session
 from db import db
 from sqlalchemy.sql import text
 import login
@@ -6,14 +6,14 @@ import login
 def get_topics():
     login.check_role()
     sql = "SELECT T.id, T.content, U.name FROM topics T, users U " \
-          "WHERE T.user_id = U.id AND T.visible = TRUE ORDER BY T.id"
+          "WHERE T.user_id=U.id AND T.visible=TRUE ORDER BY T.id"
     result = db.session.execute(text(sql))
     return result.fetchall()
 
 def get_topic(topic_id):
     login.check_role()
     sql = "SELECT T.id, T.content, U.id FROM topics T, users U " \
-          "WHERE T.id = :topic_id AND T.user_id = U.id"
+          "WHERE T.id=:topic_id AND T.user_id=U.id"
     result = db.session.execute(text(sql), {"topic_id":topic_id})
     return result.fetchall()
 
@@ -37,30 +37,32 @@ def send(content):
 def edit(topic_id, edited_content):
     user_role = session["user_role"]
     login.check_role()
-    sql = "UPDATE topics SET content = :edited_content " \
-          "WHERE id = :topic_id AND :user_role = 1"
-    db.session.execute(text(sql), {"topic_id":topic_id, "edited_content":edited_content, "user_role":user_role})
+    sql = "UPDATE topics SET content=:edited_content " \
+          "WHERE id=:topic_id AND :user_role=1"
+    db.session.execute(text(sql), {"topic_id":topic_id, \
+                                    "edited_content":edited_content, \
+                                          "user_role":user_role})
     db.session.commit()
     return True
 
 def delete(topic_id):
     user_role = session["user_role"]
     login.check_role()
-    sql = "UPDATE topics SET visible = FALSE WHERE id = :topic_id " \
-          "AND :user_role = 1"
+    sql = "UPDATE topics SET visible=FALSE WHERE id=:topic_id " \
+          "AND :user_role=1"
     db.session.execute(text(sql), {"topic_id":topic_id, "user_role":user_role})
     db.session.commit()
     return True
 
 def if_exists(name):
     login.check_role()
-    sql = "SELECT content FROM topics WHERE content = :name " \
-          "AND visible = TRUE"
+    sql = "SELECT content FROM topics WHERE content=:name " \
+          "AND visible=TRUE"
     result = db.session.execute(text(sql), {"name":name})
     result = result.fetchone()
     if_exists = result
     variable = [""]
-    if if_exists == None:
+    if if_exists is None:
         variable[0] = ""
     else:
         variable[0] = if_exists[0]

@@ -1,9 +1,6 @@
-from flask import Flask
-from flask import redirect, render_template, request, session
-from werkzeug.security import check_password_hash, generate_password_hash
-from db import db
-import os
+from flask import session
 from sqlalchemy.sql import text
+from db import db
 import login
 
 def get_forums():
@@ -14,7 +11,7 @@ def get_forums():
 
 def get_forum(forum_id):
     sql = "SELECT F.id, F.content, U.id FROM forums F, users U " \
-          "WHERE F.id = :forum_id AND F.user_id = U.id"
+          "WHERE F.id=:forum_id AND F.user_id=U.id"
     result = db.session.execute(text(sql), {"forum_id":forum_id})
     return result.fetchall()
 
@@ -27,8 +24,7 @@ def send(content):
     user_id = login.user_id()
     if user_id == -1:
         return False
-    sql = "INSERT INTO forums (content, user_id, visible) " \
-          "VALUES (:content, :user_id, TRUE)"
+    sql = "INSERT INTO forums (content, user_id, visible) VALUES (:content, :user_id, TRUE)"
     db.session.execute(text(sql), {"content":content, "user_id":user_id})
     db.session.commit()
     return True
@@ -36,8 +32,8 @@ def send(content):
 def edit(forum_id, edited_content):
     user_id = session["user_id"]
     user_role = session["user_role"]
-    sql = "UPDATE forums SET content = :edited_content " \
-          "WHERE id = :forum_id AND (user_id = :user_id OR :user_role = 1)"
+    sql = "UPDATE forums SET content=:edited_content " \
+          "WHERE id=:forum_id AND (user_id=:user_id OR :user_role=1)"
     db.session.execute(text(sql), {"forum_id":forum_id, "edited_content":edited_content, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True
@@ -46,19 +42,19 @@ def delete(forum_id):
     user_id = session["user_id"]
     user_role = session["user_role"]
     sql = "UPDATE forums SET visible=FALSE WHERE id=:forum_id " \
-          "AND (user_id = :user_id OR :user_role = 1)"
+          "AND (user_id=:user_id OR :user_role=1)"
     db.session.execute(text(sql), {"forum_id":forum_id, "user_id":user_id, "user_role":user_role})
     db.session.commit()
     return True
 
 def if_exists(name):
-    sql = "SELECT content FROM forums WHERE content = :name " \
-          "AND visible = TRUE"
+    sql = "SELECT content FROM forums WHERE content=:name " \
+          "AND visible=TRUE"
     result = db.session.execute(text(sql), {"name":name})
     result = result.fetchone()
     if_exists = result
     variable = [""]
-    if if_exists == None:
+    if if_exists is None:
         variable[0] = ""
     else:
         variable[0] = if_exists[0]

@@ -1,8 +1,6 @@
-from flask import Flask
-from flask import redirect, render_template, request, session, abort
+from flask import redirect, request, session, abort
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import db
-import os
 from sqlalchemy.sql import text
 import secrets
 
@@ -40,7 +38,7 @@ def check_role():
 
 def register(username, password):
     hash_value = generate_password_hash(password)
-    if user_count() != None:
+    if user_count() is not None:
         try:
             sql = "INSERT INTO users (name, password) VALUES (:username, :password)"
             db.session.execute(text(sql), {"username":username, "password":hash_value})
@@ -49,7 +47,8 @@ def register(username, password):
             return False
     else: # First user created will be an admin because the application is only used locally at the moment
         try:
-            sql = "INSERT INTO users (name, password, role) VALUES (:username, :password, 1)"
+            sql = "INSERT INTO users (name, password, role) " \
+                  "VALUES (:username, :password, 1)"
             db.session.execute(text(sql), {"username":username, "password":hash_value})
             db.session.commit()
         except:
@@ -71,13 +70,12 @@ def get_users():
     return result.fetchall() 
 
 def get_admins():
-    sql = "SELECT name FROM users WHERE role = 1"
+    sql = "SELECT name FROM users WHERE role=1"
     result = db.session.execute(text(sql))
     return result.fetchall() 
 
 def make_admin(id):
-    sql = "UPDATE users SET role = 1 " \
-          "WHERE id = :id"
+    sql = "UPDATE users SET role=1 WHERE id=:id"
     db.session.execute(text(sql), {"id":id})
     db.session.commit()
     return True
